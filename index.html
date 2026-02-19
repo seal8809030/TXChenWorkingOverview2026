@@ -27,14 +27,19 @@
         }
         .slide {
             display: none;
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
-            padding: 4rem;
+            padding: 1.5rem;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
             transition: all 0.5s ease-in-out;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        @media (min-width: 768px) {
+            .slide { padding: 4rem; height: 100vh; }
         }
         .slide.active { display: flex; animation: fadeIn 0.6s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
@@ -72,11 +77,12 @@
         }
         .nav-btn {
             position: fixed;
-            bottom: 2.5rem;
-            background: rgba(255, 255, 255, 0.03);
+            bottom: 1.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 3.5rem;
-            height: 3.5rem;
+            width: 2.8rem;
+            height: 2.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -85,17 +91,27 @@
             transition: all 0.3s;
             z-index: 110;
         }
+        @media (min-width: 768px) {
+            .nav-btn { width: 3.5rem; height: 3.5rem; bottom: 2.5rem; }
+        }
         .nav-btn:hover { background: var(--primary); transform: scale(1.1); box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
-        .prev-btn { left: 2.5rem; }
-        .next-btn { right: 2.5rem; }
+        .prev-btn { left: 1rem; }
+        .next-btn { right: 1rem; }
+        @media (min-width: 768px) {
+            .prev-btn { left: 2.5rem; }
+            .next-btn { right: 2.5rem; }
+        }
         
         .project-title { color: var(--primary); font-weight: 700; border-left: 6px solid var(--primary); padding-left: 1.5rem; margin-bottom: 2rem; }
         .highlight { color: #60a5fa; font-weight: 700; }
         .science-intro { background: radial-gradient(circle at 70% 30%, #1e3a8a 0%, #0f172a 100%); }
         .methodology-tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: #1e293b; color: #94a3b8; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 0.5rem; }
         
-        .content-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; width: 100%; max-width: 1200px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+        .content-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; width: 100%; max-width: 1200px; }
+        @media (min-width: 768px) {
+            .content-grid { grid-template-columns: 1.2fr 0.8fr; gap: 3rem; }
+        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
         
         .toc-item { transition: all 0.3s; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .toc-item:hover { color: var(--primary); transform: translateX(10px); }
@@ -103,11 +119,12 @@
         /* Jump Menu Styles */
         .jump-menu {
             position: fixed;
-            top: 4.5rem;
-            right: 2rem;
-            width: 280px;
+            top: 4rem;
+            right: 1rem;
+            width: calc(100vw - 2rem);
+            max-width: 280px;
             max-height: 70vh;
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 1rem;
@@ -119,6 +136,9 @@
             transition: all 0.3s ease;
             scrollbar-width: thin;
             scrollbar-color: var(--primary) transparent;
+        }
+        @media (min-width: 768px) {
+            .jump-menu { top: 4.5rem; right: 2rem; width: 280px; }
         }
         .jump-menu.active {
             opacity: 1;
@@ -134,8 +154,8 @@
 
     <div class="progress-bar" id="progressBar"></div>
     
-    <div class="fixed top-6 right-8 z-50">
-        <button id="jumpMenuBtn" class="bg-slate-800/50 hover:bg-slate-700/50 border border-white/10 px-3 py-1.5 rounded-full text-xs text-slate-400 font-mono transition-all flex items-center gap-2">
+    <div class="fixed top-4 right-4 md:top-6 md:right-8 z-50">
+        <button id="jumpMenuBtn" class="bg-slate-800/80 backdrop-blur-md hover:bg-slate-700 border border-white/10 px-3 py-1.5 rounded-full text-xs text-slate-400 font-mono transition-all flex items-center gap-2">
             <span id="slideNumber">01</span> / 21
             <svg class="w-3 h-3 transition-transform duration-300" id="jumpBtnArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
@@ -155,19 +175,19 @@
     <div id="slider">
         <!-- Slide 1: Cover -->
         <section class="slide active">
-            <div class="max-w-4xl text-center" data-aos="zoom-out">
-                <div class="mb-6 inline-block py-1 px-4 border border-blue-500/30 rounded-full text-blue-400 text-sm font-bold tracking-widest uppercase">
+            <div class="max-w-4xl text-center px-4" data-aos="zoom-out">
+                <div class="mb-4 md:mb-6 inline-block py-1 px-4 border border-blue-500/30 rounded-full text-blue-400 text-[10px] md:text-sm font-bold tracking-widest uppercase">
                     Technical Interview Presentation
                 </div>
-                <h1 class="text-7xl font-bold mb-6 tracking-tight">系統架構與 AI 落地實踐</h1>
-                <h2 class="text-3xl text-blue-400 font-light mb-12">陳添喜 <span class="text-xl opacity-60">Tien-Hsi Chen</span></h2>
-                <div class="flex justify-center gap-6 mb-16">
-                    <span class="tech-tag">AI 全端系統架構師</span>
-                    <span class="tech-tag">CIM 系統專家</span>
-                    <span class="tech-tag">MLOps 實踐者</span>
+                <h1 class="text-4xl md:text-7xl font-bold mb-4 md:mb-6 tracking-tight">系統架構與 AI 落地實踐</h1>
+                <h2 class="text-xl md:text-3xl text-blue-400 font-light mb-8 md:mb-12">陳添喜 <span class="text-sm md:text-xl opacity-60">Tien-Hsi Chen</span></h2>
+                <div class="flex flex-wrap justify-center gap-3 md:gap-6 mb-8 md:mb-16">
+                    <span class="tech-tag text-[10px] md:text-sm">AI 全端系統架構師</span>
+                    <span class="tech-tag text-[10px] md:text-sm">CIM 系統專家</span>
+                    <span class="tech-tag text-[10px] md:text-sm">MLOps 實踐者</span>
                 </div>
-                <p class="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed font-light">
-                    「我不只是開發者，我建立的是支撐海量量產的<span class="text-white font-medium">智慧生產體系</span>。」<br>
+                <p class="text-sm md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed font-light">
+                    「我不只是開發者，我建立的是支撐海量量產的<span class="text-white font-medium">智慧生產體系</span>。」<br class="hidden md:block">
                     專注於解決半導體製造中，AI 應用從開發走向產線的最後一哩路。
                 </p>
             </div>
@@ -176,8 +196,8 @@
         <!-- Slide 2: Tech Stack Overview & TOC -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">技術棧總覽與目錄</h2>
-                <div class="grid md:grid-cols-4 gap-4 mt-6">
+                <h2 class="project-title text-2xl md:text-4xl">技術棧總覽與目錄</h2>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4 md:mt-6">
                     <div class="glass-panel p-5 border-t-4 border-blue-500" data-aos="fade-up">
                         <h4 class="font-bold mb-3 text-blue-300 text-sm">Backend & AI</h4>
                         <div class="flex flex-wrap gap-1">
@@ -210,9 +230,9 @@
                     </div>
                 </div>
                 
-                <div class="mt-8 glass-panel p-6 max-w-2xl mx-auto">
-                    <h4 class="text-lg font-bold mb-4 text-blue-400 border-b border-blue-500/20 pb-2">簡報目錄 (Table of Contents)</h4>
-                    <div class="grid grid-cols-2 gap-x-12 gap-y-2">
+                <div class="mt-6 md:mt-8 glass-panel p-4 md:p-6 max-w-2xl mx-auto">
+                    <h4 class="text-base md:text-lg font-bold mb-3 md:mb-4 text-blue-400 border-b border-blue-500/20 pb-2">簡報目錄 (Table of Contents)</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-1 md:gap-y-2">
                         <div class="toc-item flex justify-between py-1 cursor-pointer text-sm" onclick="goToSlide(2)">
                             <span>I. 半導體 PMI 核心系統</span>
                             <span class="text-slate-500 font-mono">P.03</span>
@@ -241,14 +261,14 @@
         <!-- Slide 3: PMI 科普 -->
         <section class="slide science-intro">
             <div class="max-w-5xl w-full">
-                <div class="flex items-center gap-8 mb-16" data-aos="fade-right">
-                    <div class="w-24 h-24 bg-blue-600 rounded-3xl flex items-center justify-center text-5xl font-bold shadow-2xl">?</div>
-                    <div>
-                        <h2 class="text-6xl font-bold mb-2">什麼是 PMI？</h2>
-                        <p class="text-blue-300 text-2xl italic">Probe Mark Inspection (探針痕跡檢測)</p>
+                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-blue-600 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">?</div>
+                    <div class="text-center md:text-left">
+                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">什麼是 PMI？</h2>
+                        <p class="text-blue-300 text-lg md:text-2xl italic">Probe Mark Inspection (探針痕跡檢測)</p>
                     </div>
                 </div>
-                <div class="grid md:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <div class="science-card" data-aos="fade-up">
                         <h4 class="text-3xl font-bold mb-6 text-blue-400">核心定義</h4>
                         <p class="text-slate-300 text-lg leading-relaxed">
@@ -275,8 +295,8 @@
         <!-- Slide 4: RealTimePMI - Performance -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <div class="flex justify-between items-start mb-8">
-                    <h2 class="project-title text-4xl">RealTimePMI：系統效能優化與推論穩定性</h2>
+                <div class="flex flex-col md:flex-row justify-between items-start mb-4 md:mb-8 gap-2">
+                    <h2 class="project-title text-2xl md:text-4xl">RealTimePMI：系統效能優化與推論穩定性</h2>
                     <div class="methodology-tag">Challenge ➔ Action ➔ Impact</div>
                 </div>
                 <div class="content-grid">
@@ -324,8 +344,8 @@
         <!-- Slide 5: RealTimePMI - NeedleLayout -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <div class="flex justify-between items-start mb-8">
-                    <h2 class="project-title text-4xl">AI 輔助 NeedleLayout 偏移量校正</h2>
+                <div class="flex flex-col md:flex-row justify-between items-start mb-4 md:mb-8 gap-2">
+                    <h2 class="project-title text-2xl md:text-4xl">AI 輔助 NeedleLayout 偏移量校正</h2>
                     <div class="methodology-tag">Innovation ➔ Cost Saving</div>
                 </div>
                 <div class="content-grid items-center">
@@ -364,9 +384,9 @@
         <!-- Slide 6: Human-in-the-Loop - System Design -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">Human-in-the-Loop：機台整合與 UI 設計</h2>
-                <div class="grid md:grid-cols-2 gap-12">
-                    <div class="space-y-8">
+                <h2 class="project-title text-2xl md:text-4xl">Human-in-the-Loop：機台整合與 UI 設計</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+                    <div class="space-y-4 md:space-y-8">
                         <div class="value-card">
                             <h4 class="text-xl font-bold mb-4">複雜機台指令整合</h4>
                             <p class="text-slate-300 leading-relaxed">
@@ -399,11 +419,11 @@
         <!-- Slide 7: T+1 Internationalization -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <div class="flex justify-between items-start mb-8">
-                    <h2 class="project-title text-4xl">T+1 規範國際化：大規模治理實踐</h2>
-                    <div class="methodology-tag">Highly Relevant to Target Position</div>
+                <div class="flex flex-col md:flex-row justify-between items-start mb-4 md:mb-8 gap-2">
+                    <h2 class="project-title text-2xl md:text-4xl">T+1 規範國際化：大規模治理實踐</h2>
+                    <div class="methodology-tag">Relevant to Target Position</div>
                 </div>
-                <div class="grid md:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <div class="space-y-6">
                         <div class="value-card border-accent">
                             <h4 class="text-xl font-bold mb-4 text-accent">大規模程式碼庫自動化</h4>
@@ -438,8 +458,8 @@
         <!-- Slide 8: MLOps - AI Model Management -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">PMI AI Model 全生命週期管理 (MLOps)</h2>
-                <div class="grid md:grid-cols-3 gap-6 mt-10">
+                <h2 class="project-title text-2xl md:text-4xl">PMI AI Model 全生命週期管理 (MLOps)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 md:mt-10">
                     <div class="glass-panel p-8 flex flex-col justify-between border-t-8 border-blue-600 shadow-blue-500/10 shadow-2xl">
                         <div>
                             <h4 class="text-xl font-bold mb-4">系統現代化</h4>
@@ -471,8 +491,8 @@
         <!-- Slide 9: Minor Projects - WebService & Waive -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">系統整合：WebService 與 智慧 Waive</h2>
-                <div class="grid md:grid-cols-2 gap-12 items-center">
+                <h2 class="project-title text-2xl md:text-4xl">系統整合：WebService 與 智慧 Waive</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
                     <div class="space-y-6">
                         <div class="value-card">
                             <h4 class="text-xl font-bold mb-4 text-blue-300">WebService & Zeep 整合</h4>
@@ -502,14 +522,14 @@
         <!-- Slide 10: AOI 科普 -->
         <section class="slide science-intro">
             <div class="max-w-5xl w-full">
-                <div class="flex items-center gap-8 mb-16" data-aos="fade-right">
-                    <div class="w-24 h-24 bg-teal-500 rounded-3xl flex items-center justify-center text-5xl font-bold shadow-2xl">?</div>
-                    <div>
-                        <h2 class="text-6xl font-bold mb-2">什麼是 AOI？</h2>
-                        <p class="text-teal-300 text-2xl italic">Automated Optical Inspection (自動光學檢測)</p>
+                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-teal-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">?</div>
+                    <div class="text-center md:text-left">
+                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">什麼是 AOI？</h2>
+                        <p class="text-teal-300 text-lg md:text-2xl italic">Automated Optical Inspection (自動光學檢測)</p>
                     </div>
                 </div>
-                <div class="grid md:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <div class="science-card" data-aos="fade-up">
                         <h4 class="text-3xl font-bold mb-6 text-teal-400">核心定義</h4>
                         <p class="text-slate-300 text-lg leading-relaxed">
@@ -529,8 +549,8 @@
         <!-- Slide 11: RealTimeAOI - Architecture -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">RealTimeAOI：多機台支持與系統架構</h2>
-                <div class="grid md:grid-cols-2 gap-12">
+                <h2 class="project-title text-2xl md:text-4xl">RealTimeAOI：多機台支持與系統架構</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <div class="space-y-8">
                         <div class="value-card">
                             <h4 class="text-xl font-bold mb-4">多平台支持 (Multi-platform)</h4>
@@ -560,10 +580,10 @@
         <!-- Slide 12: AOI to PMI Quality Loop -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">AOI 串接 PMI：品質檢驗閉環</h2>
-                <div class="glass-panel p-12">
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
-                        <div class="space-y-8">
+                <h2 class="project-title text-2xl md:text-4xl">AOI 串接 PMI：品質檢驗閉環</h2>
+                <div class="glass-panel p-6 md:p-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
+                        <div class="space-y-4 md:space-y-8">
                             <h4 class="text-3xl font-bold text-blue-300">跨製程特徵融合</h4>
                             <p class="text-slate-300 text-lg leading-relaxed">
                                 我實現了 AOI 物件偵測與 PMI 語意分割的技術對接。利用 AOI 模型先行精準定位 PAD 與 BUMP 區域，自動剪裁後送入 PMI 進行預測。這是一場<span class="highlight">「跨系統的接力賽」</span>。
@@ -598,8 +618,8 @@
         <!-- Slide 13: OfflineAOI - Performance -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">OfflineAOI：運算效能與訓練優化</h2>
-                <div class="grid md:grid-cols-2 gap-12">
+                <h2 class="project-title text-2xl md:text-4xl">OfflineAOI：運算效能與訓練優化</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <div class="space-y-6">
                         <div class="value-card">
                             <h4 class="text-xl font-bold mb-4">GPU 資源智慧調度</h4>
@@ -633,14 +653,14 @@
         <!-- Slide 14: Health Monitor 科普 -->
         <section class="slide science-intro">
             <div class="max-w-5xl w-full">
-                <div class="flex items-center gap-8 mb-16" data-aos="fade-right">
-                    <div class="w-24 h-24 bg-indigo-600 rounded-3xl flex items-center justify-center text-5xl font-bold shadow-2xl">?</div>
-                    <div>
-                        <h2 class="text-6xl font-bold mb-2">個人健康數據 AI</h2>
-                        <p class="text-indigo-300 text-2xl italic">AI-Driven Caregiving Solution</p>
+                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-indigo-600 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">?</div>
+                    <div class="text-center md:text-left">
+                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">個人健康數據 AI</h2>
+                        <p class="text-indigo-300 text-lg md:text-2xl italic">AI-Driven Caregiving Solution</p>
                     </div>
                 </div>
-                <div class="grid md:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <div class="science-card" data-aos="fade-up">
                         <h4 class="text-3xl font-bold mb-6 text-indigo-400">開發動機：科技回歸家庭</h4>
                         <p class="text-slate-300 text-lg leading-relaxed">
@@ -660,8 +680,8 @@
         <!-- Slide 15: Health Monitor Architecture -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">Health Monitor：系統架構與 AI 整合</h2>
-                <div class="grid md:grid-cols-2 gap-8 items-center">
+                <h2 class="project-title text-2xl md:text-4xl">Health Monitor：系統架構與 AI 整合</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
                     <div class="space-y-6">
                         <div class="value-card border-indigo-500">
                             <h4 class="text-xl font-bold mb-4 text-indigo-300">智慧數據自動化</h4>
@@ -692,8 +712,8 @@
         <!-- Slide 16: Health Monitor UX -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">Health Monitor：AI 接管與使用者體驗</h2>
-                <div class="grid md:grid-cols-2 gap-12 items-center">
+                <h2 class="project-title text-2xl md:text-4xl">Health Monitor：AI 接管與使用者體驗</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
                     <div class="glass-panel p-10 border-l-8 border-accent">
                         <h4 class="text-3xl font-bold mb-8 text-accent">智慧預覽與自動填入 (核心功能)</h4>
                         <p class="text-slate-300 text-lg leading-relaxed mb-8">
@@ -725,14 +745,14 @@
         <!-- Slide 17: Xibao AI Agent 科普 -->
         <section class="slide science-intro">
             <div class="max-w-5xl w-full">
-                <div class="flex items-center gap-8 mb-16" data-aos="fade-right">
-                    <div class="w-24 h-24 bg-purple-600 rounded-3xl flex items-center justify-center text-5xl font-bold shadow-2xl">🤖</div>
-                    <div>
-                        <h2 class="text-6xl font-bold mb-2">Xibao AI Agent</h2>
-                        <p class="text-purple-300 text-2xl italic">Dynamic Skill & Autonomous Intelligence</p>
+                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-purple-600 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">🤖</div>
+                    <div class="text-center md:text-left">
+                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">Xibao AI Agent</h2>
+                        <p class="text-purple-300 text-lg md:text-2xl italic">Dynamic Skill & Autonomous Intelligence</p>
                     </div>
                 </div>
-                <div class="grid md:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <div class="science-card" data-aos="fade-up">
                         <h4 class="text-3xl font-bold mb-6 text-purple-400">動態技能與代理</h4>
                         <p class="text-slate-300 text-lg leading-relaxed">
@@ -826,8 +846,8 @@
         <!-- Slide 19: Xibao Design Philosophy -->
         <section class="slide">
             <div class="max-w-6xl w-full">
-                <h2 class="project-title text-4xl">Xibao：高可擴展性與設計優勢</h2>
-                <div class="grid md:grid-cols-2 gap-12">
+                <h2 class="project-title text-2xl md:text-4xl">Xibao：高可擴展性與設計優勢</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <div class="space-y-8">
                         <div class="value-card border-purple-500">
                             <h4 class="text-xl font-bold mb-4 text-purple-300">模組化擴展性</h4>
@@ -855,14 +875,14 @@
         <!-- Slide 20: Leadership & IT Collaboration (Transition) -->
         <section class="slide science-intro">
             <div class="max-w-5xl w-full">
-                <div class="flex items-center gap-8 mb-16" data-aos="fade-right">
-                    <div class="w-24 h-24 bg-blue-500 rounded-3xl flex items-center justify-center text-5xl font-bold shadow-2xl">💡</div>
-                    <div>
-                        <h2 class="text-6xl font-bold mb-2">IT 系統負責人的協作力</h2>
-                        <p class="text-blue-300 text-2xl italic">Bridging RD, MI, PD, and QA</p>
+                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-blue-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">💡</div>
+                    <div class="text-center md:text-left">
+                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">IT 系統負責人的協作力</h2>
+                        <p class="text-blue-300 text-lg md:text-2xl italic">Bridging RD, MI, PD, and QA</p>
                     </div>
                 </div>
-                <div class="grid md:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <div class="science-card" data-aos="fade-up">
                         <h4 class="text-3xl font-bold mb-6 text-blue-400">全方位的技術轉譯</h4>
                         <p class="text-slate-300 text-lg leading-relaxed">
@@ -883,16 +903,16 @@
 
         <!-- Slide 21: Conclusion -->
         <section class="slide">
-            <div class="max-w-4xl text-center">
-                <h2 class="text-6xl font-bold mb-16 italic">專業願景</h2>
-                <div class="glass-panel p-16 mb-16 shadow-blue-500/20 shadow-2xl">
-                    <p class="text-4xl leading-relaxed font-light">
+            <div class="max-w-4xl text-center px-4">
+                <h2 class="text-3xl md:text-6xl font-bold mb-8 md:mb-16 italic">專業願景</h2>
+                <div class="glass-panel p-8 md:p-16 mb-8 md:mb-16 shadow-blue-500/20 shadow-2xl">
+                    <p class="text-xl md:text-4xl leading-relaxed font-light">
                         「我致力於構建<span class="text-blue-400 font-bold underline underline-offset-8">有生命力</span>的系統，<br>
                         讓技術不再是冰冷的工具，<br>
                         而是能實質解決問題、傳遞溫度的戰友。」
                     </p>
                 </div>
-                <div class="flex justify-center gap-16">
+                <div class="flex justify-center gap-8 md:gap-16">
                     <div class="text-center">
                         <p class="text-4xl font-bold text-white mb-2">Reliable</p>
                         <p class="text-xs text-slate-500 uppercase tracking-widest">穩定性</p>
