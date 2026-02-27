@@ -1,1089 +1,1274 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高級技術面試簡報 | 陳添喜 Tien-Hsi Chen</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #3b82f6;
-            --primary-dark: #1d4ed8;
-            --accent: #10b981;
-            --dark: #0f172a;
-            --dark-lighter: #1e293b;
-            --light: #f8fafc;
-        }
-        body { 
-            font-family: 'Noto Sans TC', sans-serif; 
-            background-color: var(--dark);
-            color: var(--light);
-            overflow: hidden;
-            user-select: none;
-        }
-        .slide {
-            display: none;
-            min-height: 100vh;
-            width: 100vw;
-            padding: 1.5rem;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            transition: all 0.5s ease-in-out;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        @media (min-width: 768px) {
-            .slide { padding: 4rem; height: 100vh; }
-        }
-        .slide.active { display: flex; animation: fadeIn 0.6s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.6);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        .tech-tag {
-            background: rgba(59, 130, 246, 0.15);
-            color: #93c5fd;
-            border: 1px solid rgba(147, 197, 253, 0.2);
-            padding: 0.3rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        .value-card {
-            border-left: 5px solid var(--primary);
-            background: linear-gradient(to right, rgba(59, 130, 246, 0.05), transparent);
-            padding: 1.5rem;
-            border-radius: 0 1rem 1rem 0;
-        }
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            transition: width 0.3s ease;
-            z-index: 100;
-        }
-        .nav-btn {
-            position: fixed;
-            bottom: 1.5rem;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 2.8rem;
-            height: 2.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 110;
-        }
-        @media (min-width: 768px) {
-            .nav-btn { width: 3.5rem; height: 3.5rem; bottom: 2.5rem; }
-        }
-        .nav-btn:hover { background: var(--primary); transform: scale(1.1); box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
-        .prev-btn { left: 1rem; }
-        .next-btn { right: 1rem; }
-        @media (min-width: 768px) {
-            .prev-btn { left: 2.5rem; }
-            .next-btn { right: 2.5rem; }
-        }
-        
-        .project-title { color: var(--primary); font-weight: 700; border-left: 6px solid var(--primary); padding-left: 1.5rem; margin-bottom: 2rem; }
-        .highlight { color: #60a5fa; font-weight: 700; }
-        .science-intro { background: radial-gradient(circle at 70% 30%, #1e3a8a 0%, #0f172a 100%); }
-        .methodology-tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: #1e293b; color: #94a3b8; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 0.5rem; }
-        
-        .content-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; width: 100%; max-width: 1200px; }
-        @media (min-width: 768px) {
-            .content-grid { grid-template-columns: 1.2fr 0.8fr; gap: 3rem; }
-        }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
-        
-        .toc-item { transition: all 0.3s; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .toc-item:hover { color: var(--primary); transform: translateX(10px); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陳添喜 · Interview 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300&family=IBM+Plex+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --accent: #0057ff;
+  --muted: #888888;
+  --border: #e0e0e0;
+  --light: #f5f5f5;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans TC', sans-serif;
+}
 
-        /* Jump Menu Styles */
-        .jump-menu {
-            position: fixed;
-            top: 4rem;
-            right: 1rem;
-            width: calc(100vw - 2rem);
-            max-width: 280px;
-            max-height: 70vh;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            z-index: 120;
-            overflow-y: auto;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary) transparent;
-        }
-        @media (min-width: 768px) {
-            .jump-menu { top: 4.5rem; right: 2rem; width: 280px; }
-        }
-        .jump-menu.active {
-            opacity: 1;
-            pointer-events: all;
-            transform: translateY(0);
-        }
-        .jump-item { padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); transition: all 0.2s; display: flex; align-items: center; gap: 0.75rem; }
-        .jump-item:hover { background: rgba(59, 130, 246, 0.1); color: var(--primary); }
-        .jump-item.active { background: rgba(59, 130, 246, 0.2); border-left: 3px solid var(--primary); }
-    </style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: var(--mono);
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════
+   DECK CONTAINER
+═══════════════════════════ */
+#deck {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+/* ═══════════════════════════
+   SLIDE
+═══════════════════════════ */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 100px 72px 100px;
+
+  /* initial hidden */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(60px);
+  transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1),
+              transform 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+
+.slide.exit-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* ═══════════════════════════
+   FIXED CHROME
+═══════════════════════════ */
+#chrome {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100px;
+  z-index: 500;
+}
+
+.c-name {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+.c-nav {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.c-nav li {
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.3s cubic-bezier(0.4,0,0.2,1), border-color 0.3s cubic-bezier(0.4,0,0.2,1);
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  position: relative;
+}
+.c-nav li:hover { color: var(--fg); }
+.c-nav li.active { 
+  color: var(--accent); 
+  border-bottom-color: var(--accent); 
+}
+
+.c-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.c-idx {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  min-width: 60px;
+  text-align: right;
+}
+
+/* ═══════════════════════════
+   BOTTOM NAV ARROWS
+═══════════════════════════ */
+#arrows {
+  position: fixed;
+  bottom: 28px;
+  right: 80px;
+  display: flex;
+  gap: 12px;
+  z-index: 500;
+}
+
+.arr-btn {
+  width: 40px; height: 40px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--muted);
+  transition: all 0.2s;
+  font-family: var(--mono);
+  user-select: none;
+}
+.arr-btn:hover { border-color: var(--accent); color: var(--accent); }
+.arr-btn:disabled { opacity: 0.25; cursor: default; }
+
+/* DOT RAIL */
+#dot-rail {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 500;
+}
+
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+}
+.dot.on { background: var(--accent); transform: scale(1.6); }
+
+/* ═══════════════════════════
+   SECTION TAG
+═══════════════════════════ */
+.sec-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+.sec-tag::before {
+  content: '';
+  width: 30px; height: 1px;
+  background: var(--accent);
+}
+
+.sec-tag-sub {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-left: 6px;
+  font-weight: 400;
+}
+
+/* ═══════════════════════════
+   COVER  (slide 0)
+═══════════════════════════ */
+#s0 { background: var(--bg); overflow: hidden; }
+
+.cover-bg-text {
+  position: absolute;
+  bottom: -40px; right: -20px;
+  font-size: clamp(100px, 18vw, 280px);
+  font-weight: 600;
+  color: #f0f0f0;
+  letter-spacing: -0.05em;
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  z-index: -1;
+  text-transform: uppercase;
+}
+
+.cover-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.cover-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.cover-eyebrow::before { content:''; width:16px; height:1px; background:var(--muted); }
+
+.cover-name {
+  font-size: clamp(56px, 7vw, 96px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 6px;
+}
+
+.cover-name-en {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 40px;
+}
+
+.cover-role-block {
+  border-left: 3px solid var(--accent);
+  padding-left: 20px;
+  margin-bottom: 40px;
+}
+
+.cover-role {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  font-weight: 500;
+  line-height: 2;
+}
+
+.cover-intro {
+  font-size: 17px;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.8;
+  max-width: 520px;
+}
+
+.cover-right {
+  border-left: 1px solid var(--border);
+  padding-left: 56px;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.info-row:first-child { border-top: 1px solid var(--border); }
+
+.info-key {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 2px;
+}
+
+.info-val {
+  font-size: 16px;
+  color: var(--fg);
+  line-height: 1.6;
+  font-family: var(--sans);
+}
+
+/* ═══════════════════════════
+   CONTENT SLIDES
+═══════════════════════════ */
+.sec-head {
+  margin-bottom: 36px;
+}
+
+.sec-title {
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.sec-title span { color: var(--accent); }
+
+.sec-desc {
+  font-size: 18px;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 700px;
+}
+
+/* ── CARDS ── */
+.cards { display: flex; flex-direction: column; }
+
+.card {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+  padding: 22px 0;
+  border-top: 1px solid var(--border);
+}
+.card:last-child { border-bottom: 1px solid var(--border); }
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.c-tag {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.c-sub {
+  font-size: 14px;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.c-title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.c-desc {
+  font-size: 16px;
+  color: #444;
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.75;
+  max-width: 700px;
+  margin-bottom: 12px;
+}
+
+.c-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.act {
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.act.blue {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #f3f7ff;
+}
+
+/* ── TECH STACK 3-col ── */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.stack-item {
+  padding: 28px 28px;
+  border-top: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.stack-item:nth-child(3n) { border-right: none; }
+.stack-item:nth-child(n+4) { border-top: 1px solid var(--border); }
+
+.s-cat {
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.s-name {
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.s-desc {
+  font-size: 15px;
+  color: #555;
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.s-pills { display: flex; flex-wrap: wrap; gap: 4px; }
+.sp {
+  font-size: 12px;
+  padding: 4px 10px;
+  background: var(--light);
+  color: var(--muted);
+}
+
+.bg-text {
+  position: absolute;
+  bottom: -40px; right: -20px;
+  font-size: clamp(100px, 18vw, 280px);
+  font-weight: 600;
+  color: #f4f4f4;
+  letter-spacing: -0.05em;
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  z-index: -1;
+  text-transform: uppercase;
+}
+.proj-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  flex: 1;
+}
+.proj-item {
+  background: var(--bg);
+  padding: 32px 36px;
+}
+.proj-item.gray { background: var(--light); display:flex;flex-direction:column;justify-content:center; }
+
+.p-num { font-size: 13px; color: var(--muted); letter-spacing:.15em; margin-bottom:16px; }
+.p-title { font-size: 17px; font-weight: 500; margin-bottom: 10px; letter-spacing: -0.01em; line-height: 1.3; }
+.p-desc {
+  font-size: 16px;
+  color: #555;
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.75;
+  margin-bottom: 18px;
+}
+.p-stack { display: flex; flex-wrap: wrap; gap: 4px; }
+.ps { font-size: 12px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); }
+
+/* ── METHOD 4-col ── */
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+}
+.m-step {
+  padding: 32px 28px;
+  border-right: 1px solid var(--border);
+}
+.m-step:last-child { border-right: none; }
+.m-num {
+  font-size: 40px;
+  font-weight: 600;
+  color: #ebebeb;
+  line-height: 1;
+  margin-bottom: 14px;
+  letter-spacing: -0.04em;
+}
+.m-label {
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.m-title {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.m-desc {
+  font-size: 16px;
+  color: #555;
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* ── CLOSE ── */
+#s-close {
+  background: #0f1724;
+  color: #fff;
+  overflow: hidden;
+}
+
+.close-cover-bg-text {
+  position: absolute;
+  bottom: -40px; right: -20px;
+  font-size: clamp(100px, 18vw, 280px);
+  font-weight: 600;
+  color: #1a2634;
+  letter-spacing: -0.05em;
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  z-index: -1;
+  text-transform: uppercase;
+}
+
+.close-cover-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.close-cover-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #5a6a7a;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.close-cover-eyebrow::before { content:''; width:16px; height:1px; background:#5a6a7a; }
+
+.close-cover-name {
+  font-size: clamp(56px, 7vw, 96px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 6px;
+}
+
+.close-cover-name-en {
+  font-size: 24px;
+  font-weight: 300;
+  color: #5a6a7a;
+  letter-spacing: 0.08em;
+  margin-bottom: 40px;
+}
+
+.close-cover-role-block {
+  border-left: 3px solid #3a5a8a;
+  padding-left: 20px;
+  margin-bottom: 40px;
+}
+
+.close-cover-role {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  font-weight: 500;
+  line-height: 2;
+}
+
+.close-cover-intro {
+  font-size: 17px;
+  color: #8899aa;
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.8;
+  max-width: 520px;
+}
+
+.close-cover-right {
+  border-left: 1px solid #2a3a4a;
+  padding-left: 56px;
+}
+
+.close-info-row {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #2a3a4a;
+}
+.close-info-row:first-child { border-top: 1px solid #2a3a4a; }
+
+.close-info-key {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #5a6a7a;
+  padding-top: 2px;
+}
+
+.close-info-val {
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.6;
+  font-family: var(--sans);
+}
+
+/* page counter bottom-left */
+#page-label {
+  position: fixed;
+  bottom: 36px;
+  left: 80px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  z-index: 500;
+}
+</style>
 </head>
 <body>
 
-    <div class="progress-bar" id="progressBar"></div>
-    
-    <div class="fixed top-4 right-4 md:top-6 md:right-8 z-50">
-        <button id="jumpMenuBtn" class="bg-slate-800/80 backdrop-blur-md hover:bg-slate-700 border border-white/10 px-3 py-1.5 rounded-full text-xs text-slate-400 font-mono transition-all flex items-center gap-2">
-            <span id="slideNumber">01</span> / 21
-            <svg class="w-3 h-3 transition-transform duration-300" id="jumpBtnArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-        </button>
+<!-- ═══ CHROME ═══ -->
+<header id="chrome">
+  <div class="c-name">陳添喜 &nbsp;·&nbsp; Chen Tian-Xi</div>
+  <ul class="c-nav" id="c-nav">
+    <li onclick="goTo(0)">Profile</li>
+    <li onclick="goTo(1)">PMI — I</li>
+    <li onclick="goTo(2)">PMI — II</li>
+    <li onclick="goTo(3)">AOI — I</li>
+    <li onclick="goTo(4)">AOI — II</li>
+    <li onclick="goTo(5)">Stack</li>
+    <li onclick="goTo(6)">Projects</li>
+    <li onclick="goTo(7)">Method</li>
+    <li onclick="goTo(8)">Close</li>
+  </ul>
+  <div class="c-progress">
+    <div class="c-idx" id="c-idx">01 / 09</div>
+  </div>
+</header>
+
+<!-- ═══ DECK ═══ -->
+<div id="deck">
+
+  <!-- ══════ 00 · COVER ══════ -->
+  <section class="slide active" id="s0">
+    <div class="cover-bg-text">AI EAP</div>
+    <div class="cover-grid">
+      <div class="cover-left">
+        <div class="cover-eyebrow">AI Application Engineer · Presentation 2026</div>
+        <div class="cover-name">陳添喜</div>
+        <div class="cover-name-en">Chen Tian-Xi</div>
+        <div class="cover-role-block">
+          <div class="cover-role">CIM · EAP<br>Equipment Application Programming<br>AI Full-Stack Engineer</div>
+        </div>
+        <div class="cover-intro">
+          從需求分析、架構設計、開發實作，到部署上線與後續迭代——<br>
+          我能獨立推進一個功能的完整生命週期，<br>
+          並在機台量產的複雜環境中持續交付 AI 應用。
+        </div>
+      </div>
+      <div class="cover-right">
+        <div class="info-row">
+          <div class="info-key">現職</div>
+          <div class="info-val">CIM EAP Engineer<br>半導體機台 AI 應用整合</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">核心能力</div>
+          <div class="info-val">AI 推論系統 · 全端開發<br>機台整合 · 分散式部署</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">技術語言</div>
+          <div class="info-val">Python · VB.net · DevExpress<br>SQL · Docker · Linux</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">AI 應用</div>
+          <div class="info-val">語意分割 · 物件偵測<br>LLM Agent · 多模態</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">特質</div>
+          <div class="info-val">端到端推進 · 問題導向<br>主動銜接 · 持續迭代</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 01 · PMI — I ══════ -->
+  <section class="slide" id="s1">
+    <div class="bg-text">PMI</div>
+    <div class="sec-tag">01 &nbsp;·&nbsp; 探針痕跡檢測 PMI <span class="sec-tag-sub">— Part I / II</span></div>
+    <div class="sec-head">
+      <div class="sec-title">PMI 系統全端推進<br><span>從推論引擎到生產整合</span></div>
+      <div class="sec-desc">負責 PMI 系統核心功能開發、架構重構與生產部署，涵蓋推論引擎優化、機台指令整合，以及多個子系統的從零建立。</div>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">推論 · 性能</span>
+          <span class="c-sub">RealTimePMI<br>瓶頸突破</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">找出 Model Predict 底層性能瓶頸，實現精準效能優化</div>
+          <div class="c-desc">主導推論流程的效能分析與瓶頸突破。在不引入新技術棧的前提下，運用物理數學工程（如梯度下降法逼近）實作 AI 輔助 NeedleLayout 偏移量線性回歸，支持高精度自動平移、旋轉與對準。</div>
+          <div class="c-actions">
+            <span class="act blue">性能瓶頸分析</span>
+            <span class="act blue">梯度下降回歸</span>
+            <span class="act">物理數學工程</span>
+            <span class="act">推論引擎優化</span>
+            <span class="act">NeedleLayout</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">人機協作</span>
+          <span class="c-sub">Human-in-the-Loop<br>決策平衡</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">設計複判緩衝機制，整合 SCES/GEM 指令實現精準停機與放行決策</div>
+          <div class="c-desc">規劃複判整體架構與職責切分，在品質管控與生產效率之間建立靈活的緩衝流程，確保 AI 判斷結果經由確認後，能精準執行機台續測或鎖機。</div>
+          <div class="c-actions">
+            <span class="act blue">決策流程設計</span>
+            <span class="act blue">SCES/GEM 整合</span>
+            <span class="act">UI 架構設計</span>
+            <span class="act">品質把關機制</span>
+            <span class="act">VB.net</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">預警機制</span>
+          <span class="c-sub">Rules2 · 集中度<br>全局監控</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">建立針痕管制線預警系統，以統計模型計算 Probecard 整體針偏風險</div>
+          <div class="c-desc">開發 Rules2 機制在客戶標準前加嚴卡關，以針痕集中度計算單卡整體風險，建立全局監控 UI 介面並設計離線資料處理流程，確保不影響測中測試時間。</div>
+          <div class="c-actions">
+            <span class="act blue">統計風險模型</span>
+            <span class="act">Rules2 機制</span>
+            <span class="act">全局監控 UI</span>
+            <span class="act">離線處理</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════ 02 · PMI — II ══════ -->
+  <section class="slide" id="s2">
+    <div class="bg-text">PMI</div>
+    <div class="sec-tag">01 &nbsp;·&nbsp; 探針痕跡檢測 PMI <span class="sec-tag-sub">— Part II / II</span></div>
+    <div class="sec-head">
+      <div class="sec-title">PMI 系統全端推進<br><span>策略資訊管理</span></div>
+      <div class="sec-desc">從 Waive 放行邏輯、儲存成本優化，到 AI Model 的訓練、進退版，完整掌控 PMI 系統的品質決策層。</div>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">品質 · 放行</span>
+          <span class="c-sub">Waive 機制<br>WebService 整合</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">開發多邏輯 Waive 放行機制，建立 WebService 降低系統耦合</div>
+          <div class="c-desc">實作 By 針卡歷史 / By Wafer 站點的不同放行策略，開發 WebService 供 Python 端調用以解析 SetupFile 等耗時操作，在確保品質前提下降低 False Alarm 導致的生產中斷。</div>
+          <div class="c-actions">
+            <span class="act blue">WebService 設計</span>
+            <span class="act">Zeep 調用</span>
+            <span class="act">多策略放行</span>
+            <span class="act">系統解耦</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">Model 管理</span>
+          <span class="c-sub">全生命週期<br>Label → 上線</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">重構訓練後端為純 Python，實作 AI Model 全生命週期管理系統</div>
+          <div class="c-desc">涵蓋 Label、訓練、推論、進版、退版、圖庫功能，整合 Offline 推論與 RealTimePMI 流程，統一 QA/PD 操作介面，解決舊有訓練程式無法維護與單通道優化不足的問題。</div>
+          <div class="c-actions">
+            <span class="act blue">訓練後端重構</span>
+            <span class="act">Offline 推論</span>
+            <span class="act">進退版管理</span>
+            <span class="act">流程整合</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">EAP 挑戰</span>
+          <span class="c-sub">LLM 工程化<br>i18n 自動化</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">LLM 工程化應用：批量 Repos 自動化與 AutoLabel 實驗</div>
+          <div class="c-desc">設計 Agent Tools 對接 PMI 訓練流程達成 AutoLabel 實驗；設計 Agent 工具對批量程式碼庫進行 T+1 規範中英文切換的自動化批改與 Review，實作 i18n 國際化框架整合。</div>
+          <div class="c-actions">
+            <span class="act blue">LLM API</span>
+            <span class="act blue">Agent Tools</span>
+            <span class="act">AutoLabel</span>
+            <span class="act">i18n 自動化</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════ 03 · AOI — I ══════ -->
+  <section class="slide" id="s3">
+    <div class="bg-text">AOI</div>
+    <div class="sec-tag">02 &nbsp;·&nbsp; 自動光學檢測 AOI <span class="sec-tag-sub">— Part I / II</span></div>
+    <div class="sec-head">
+      <div class="sec-title">從零部署 AOI 系統<br><span>串接 PMI 建立完整品質鏈</span></div>
+      <div class="sec-desc">主導 RealTimeAOI 系統從無到有的部署，整合多平台機台支援，並設計 AOI × PMI 雙模型串接流程。</div>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">多廠商整合</span>
+          <span class="c-sub">RealTimeAOI<br>多平台導入</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">RealTimeAOI 多廠商多平台導入與系統化整合</div>
+          <div class="c-desc">主導 RealTimeAOI 即時檢測系統由零到一的大規模部署，成功導入 Camtek、Rudolph 等多家廠商機台，建立可擴充且高度解耦的多平台支援架構。</div>
+          <div class="c-actions">
+            <span class="act blue">多廠商整合</span>
+            <span class="act blue">多平台導入</span>
+            <span class="act">系統解耦</span>
+            <span class="act">各類機台封裝</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">核心協同</span>
+          <span class="c-sub">AOI × PMI<br>業務去耦合</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">AOI × PMI 跨應用業務功能解耦與 API 互相調用</div>
+          <div class="c-desc">將檢測業務功能高度去耦合，建立獨立 API 供不同 AI 應用互相調用。實現 AOI 偵測與 PMI 語意分割的端到端串接，讓 Wafer 在出貨前能回溯檢驗前製程站點可能遺漏的風險。</div>
+          <div class="c-actions">
+            <span class="act blue">重點項目</span>
+            <span class="act blue">業務功能解耦</span>
+            <span class="act">API 互相調用</span>
+            <span class="act">品質把關機制</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════ 04 · AOI — II ══════ -->
+  <section class="slide" id="s4">
+    <div class="bg-text">AOI</div>
+    <div class="sec-tag">02 &nbsp;·&nbsp; 自動光學檢測 AOI <span class="sec-tag-sub">— Part II / II</span></div>
+    <div class="sec-head">
+      <div class="sec-title">從零部署 AOI 系統<br><span>UI前端交互、分析開發</span></div>
+      <div class="sec-desc">解決訓練瓶頸問題，並從零設計 AOI 人員複判作業流程與操作介面。</div>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">數據分析</span>
+          <span class="c-sub">OfflineAOI<br>QA 多樣化需求</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">聚焦完成 QA 多樣化與持續變化的分析需求</div>
+          <div class="c-desc">開發包含 Wafer Map 與 AI 預測結果的視覺化整合顯示系統，針對不同製程需求提供高度定制化的報表功能，協助 QA 人員排除單一指標無法涵蓋的異常狀況。</div>
+          <div class="c-actions">
+            <span class="act blue">Wafer Map 整合</span>
+            <span class="act blue">客製化報表</span>
+            <span class="act">多維度分析</span>
+            <span class="act">QA 需求快速響應</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">Model 管理</span>
+          <span class="c-sub">生命週期管理<br>快速迭代</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">建立 AI Model 全生命週期管理系統</div>
+          <div class="c-desc">獨立開發涵蓋 Label、訓練、推論、進版、退版、圖庫等功能的完整交互介面與後端程式，實現對 AI 模型的集中化管理、品質控管與快速部署迭代。</div>
+          <div class="c-actions">
+            <span class="act blue">全生命週期管理</span>
+            <span class="act">集中化控管</span>
+            <span class="act">進退版機制</span>
+            <span class="act">UI 獨立設計</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">復判介面</span>
+          <span class="c-sub">QC Interface<br>知識降負</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">QC Interface：致力於人員操作介面的知識降負</div>
+          <div class="c-desc">不斷打磨並交付簡潔、好用的 QC 複判介面，透過優化交互流程降低人員操作時的認知負擔，在確保品質的同時提升人機協作的流暢度與效率。</div>
+          <div class="c-actions">
+            <span class="act blue">介面知識降負</span>
+            <span class="act blue">極致簡潔 UI</span>
+            <span class="act">人機協作優化</span>
+            <span class="act">操作效率提升</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════ 05 · TECH STACK ══════ -->
+  <section class="slide" id="s5">
+    <div class="bg-text">Stack</div>
+    <div class="sec-tag">03 &nbsp;·&nbsp; 技術能力</div>
+    <div class="sec-head">
+      <div class="sec-title">生產環境中<br><span>實際使用的技術組合</span></div>
+      <div class="sec-desc">每一項技術都曾在實際功能中獨立設計、實作、部署、驗證。</div>
     </div>
 
-    <div id="jumpMenu" class="jump-menu">
-        <!-- Content will be generated by JS -->
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="s-cat">核心語言</div>
+        <div class="s-name">Python</div>
+        <div class="s-desc">多進程推論架構、後端 API 服務、訓練流程、WebService 整合，是系統執行層主力語言。</div>
+        <div class="s-pills">
+          <span class="sp">Multiprocessing</span><span class="sp">FastAPI</span><span class="sp">Flask</span><span class="sp">Zeep</span><span class="sp">SQLite</span>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="s-cat">機台控制層</div>
+        <div class="s-name">VB.net · SCES / GEM</div>
+        <div class="s-desc">在 EAP 環境中抽象化機台指令控制邏輯，實作 Pause / Resume / Lock 並與 Python 後端整合。</div>
+        <div class="s-pills">
+          <span class="sp">VB.net</span><span class="sp">SCES</span><span class="sp">GEM</span><span class="sp">機台整合</span>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="s-cat">部署 · 環境</div>
+        <div class="s-name">Docker · Linux · Nginx</div>
+        <div class="s-desc">負責多系統容器化部署，包含 PMI/AOI 遷移至 Linux Docker，以及 Nginx 反向代理與 SSL 配置。</div>
+        <div class="s-pills">
+          <span class="sp">Docker Compose</span><span class="sp">Linux</span><span class="sp">Nginx</span><span class="sp">HTTPS</span>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="s-cat">AI · 影像</div>
+        <div class="s-name">YOLO · 語意分割 · OpenCV</div>
+        <div class="s-desc">具備 AI Model 訓練、推論、進退版的完整工程能力，能將模型串接至生產系統並設計端到端推論流程。</div>
+        <div class="s-pills">
+          <span class="sp">YOLO</span><span class="sp">語意分割</span><span class="sp">OpenCV</span><span class="sp">Sam2</span>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="s-cat">LLM · Agent</div>
+        <div class="s-name">LangChain · Gemini · OpenAI</div>
+        <div class="s-desc">研究並實作多智能體工作流，含動態技能載入、Middleware 架構，以及 LLM 輔助批量程式碼 Review。</div>
+        <div class="s-pills">
+          <span class="sp">LangChain</span><span class="sp">Gemini</span><span class="sp">Agent Tools</span><span class="sp">多模態</span>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="s-cat">前端 · 視覺化數據分析</div>
+        <div class="s-name">VB.net · DevExpress</div>
+        <div class="s-desc">主導穩定、高性能的生產端複判介面開發。利用 DevExpress 組件庫優化交互體驗，實現 Wafer Map 整合顯示與多維度 QA 分析報表。</div>
+        <div class="s-pills">
+          <span class="sp">DevExpress</span><span class="sp">WinForm</span><span class="sp">Wafer Map UI</span><span class="sp">SQL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 06 · SIDE PROJECTS ══════ -->
+  <section class="slide" id="s6">
+    <div class="bg-text">Projects</div>
+    <div class="sec-tag">04 &nbsp;·&nbsp; 個人專案</div>
+    <div class="sec-head">
+      <div class="sec-title">業餘時間<br><span>從架構到上線的自主實踐</span></div>
+      <div class="sec-desc">三個個人專案，驗證跨域設計與全端推進的能力。</div>
     </div>
 
-    <button class="nav-btn prev-btn" onclick="changeSlide(-1)">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-    </button>
-    <button class="nav-btn next-btn" onclick="changeSlide(1)">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-    </button>
+    <div class="cards">
 
-    <div id="slider">
-        <!-- Slide 1: Cover -->
-        <section class="slide active">
-            <div class="max-w-4xl text-center px-4" data-aos="zoom-out">
-                <div class="mb-4 md:mb-6 inline-block py-1 px-4 border border-blue-500/30 rounded-full text-blue-400 text-[10px] md:text-sm font-bold tracking-widest uppercase">
-                    Technical Interview Presentation
-                </div>
-                <h1 class="text-4xl md:text-7xl font-bold mb-4 md:mb-6 tracking-tight">系統架構與 AI 落地實踐</h1>
-                <h2 class="text-xl md:text-3xl text-blue-400 font-light mb-8 md:mb-12">陳添喜 <span class="text-sm md:text-xl opacity-60">Tien-Hsi Chen</span></h2>
-                <div class="flex flex-wrap justify-center gap-3 md:gap-6 mb-8 md:mb-16">
-                    <span class="tech-tag text-[10px] md:text-sm">AI 全端系統架構師</span>
-                    <span class="tech-tag text-[10px] md:text-sm">CIM 系統專家</span>
-                    <span class="tech-tag text-[10px] md:text-sm">MLOps 實踐者</span>
-                </div>
-                <p class="text-sm md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed font-light">
-                    「我不只是開發者，我建立的是支撐海量量產的<span class="text-white font-medium">智慧生產體系</span>。」<br class="hidden md:block">
-                    專注於解決半導體製造中，AI 應用從開發走向產線的最後一哩路。
-                </p>
-            </div>
-        </section>
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">P-01</span>
+          <span class="c-sub">健康數據監控<br>Flask + Gemini</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">個人健康數據智慧監控系統 Health Monitor</div>
+          <div class="c-desc">以 Flask + SQLite 建構後端，整合 Gemini 2.5 Flash 多模態 AI 實作圖片自動數據擷取與語音解析，Docker Compose 管理 Flask + Nginx 配置 SSL 加密。前端以 Vanilla JS 實作去框架化 SPA，整合 Camera API 與 MediaRecorder API 即時視覺化。</div>
+          <div class="c-actions">
+            <span class="act blue">Flask</span>
+            <span class="act blue">Gemini</span>
+            <span class="act">Docker</span>
+            <span class="act">Nginx · SSL</span>
+            <span class="act">Vanilla JS</span>
+            <span class="act">Chart.js</span>
+          </div>
+        </div>
+      </div>
 
-        <!-- Slide 2: Tech Stack Overview & TOC -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">技術棧總覽與目錄</h2>
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4 md:mt-6">
-                    <div class="glass-panel p-5 border-t-4 border-blue-500" data-aos="fade-up">
-                        <h4 class="font-bold mb-3 text-blue-300 text-sm">Backend & AI</h4>
-                        <div class="flex flex-wrap gap-1">
-                            <span class="text-[10px] tech-tag">Python</span><span class="text-[10px] tech-tag">FastAPI</span>
-                            <span class="text-[10px] tech-tag">Flask</span><span class="text-[10px] tech-tag">VB.net</span>
-                            <span class="text-[10px] tech-tag">LangChain</span>
-                        </div>
-                    </div>
-                    <div class="glass-panel p-5 border-t-4 border-accent" data-aos="fade-up" data-aos-delay="100">
-                        <h4 class="font-bold mb-3 text-accent text-sm">Infrastructure</h4>
-                        <div class="flex flex-wrap gap-1">
-                            <span class="text-[10px] tech-tag">Linux</span><span class="text-[10px] tech-tag">Docker</span>
-                            <span class="text-[10px] tech-tag">Nginx</span><span class="text-[10px] tech-tag">MSSQL</span>
-                            <span class="text-[10px] tech-tag">SQLite</span>
-                        </div>
-                    </div>
-                    <div class="glass-panel p-5 border-t-4 border-purple-500" data-aos="fade-up" data-aos-delay="200">
-                        <h4 class="font-bold mb-3 text-purple-400 text-sm">Industrial</h4>
-                        <div class="flex flex-wrap gap-1">
-                            <span class="text-[10px] tech-tag">Secs/Gem</span><span class="text-[10px] tech-tag">CIM</span>
-                            <span class="text-[10px] tech-tag">PDS 整合</span><span class="text-[10px] tech-tag">半導體 Domain</span>
-                        </div>
-                    </div>
-                    <div class="glass-panel p-5 border-t-4 border-yellow-500" data-aos="fade-up" data-aos-delay="300">
-                        <h4 class="font-bold mb-3 text-yellow-400 text-sm">Frontend & UX</h4>
-                        <div class="flex flex-wrap gap-1">
-                            <span class="text-[10px] tech-tag">JavaScript</span><span class="text-[10px] tech-tag">Chart.js</span>
-                            <span class="text-[10px] tech-tag">Tailwind</span><span class="text-[10px] tech-tag">UI/UX Design</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-6 md:mt-8 glass-panel p-4 md:p-6 max-w-2xl mx-auto">
-                    <h4 class="text-base md:text-lg font-bold mb-3 md:mb-4 text-blue-400 border-b border-blue-500/20 pb-2">簡報目錄 (Table of Contents)</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-1 md:gap-y-2">
-                        <div class="toc-item flex justify-between py-1 cursor-pointer text-sm" onclick="goToSlide(2)">
-                            <span>I. 半導體 PMI 核心系統</span>
-                            <span class="text-slate-500 font-mono">P.03</span>
-                        </div>
-                        <div class="toc-item flex justify-between py-1 cursor-pointer text-sm" onclick="goToSlide(9)">
-                            <span>II. AOI 跨平台辨識體系</span>
-                            <span class="text-slate-500 font-mono">P.10</span>
-                        </div>
-                        <div class="toc-item flex justify-between py-1 cursor-pointer text-sm" onclick="goToSlide(13)">
-                            <span>III. 個人健康數據智慧監控</span>
-                            <span class="text-slate-500 font-mono">P.14</span>
-                        </div>
-                        <div class="toc-item flex justify-between py-1 cursor-pointer text-sm" onclick="goToSlide(16)">
-                            <span>IV. Xibao AI Agent 技術架構</span>
-                            <span class="text-slate-500 font-mono">P.17</span>
-                        </div>
-                        <div class="toc-item flex justify-between py-1 cursor-pointer text-sm" onclick="goToSlide(19)">
-                            <span>V. 領導力、方法論與結語</span>
-                            <span class="text-slate-500 font-mono">P.20</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <div class="card">
+        <div class="card-meta">
+          <span class="c-tag">P-02</span>
+          <span class="c-sub">Discord Bot<br>LangChain + Agent</span>
+        </div>
+        <div class="card-body">
+          <div class="c-title">智能 Agentic Discord 機器人 Xibao Bot</div>
+          <div class="c-desc">以 LangChain + Gemini 構建具工具調用能力的智能 Agent，設計動態技能載入機制（skills/ 目錄自動掃描註冊），實作含 SkillMiddleware、ImageHandlingMiddleware、ToolLoggingMiddleware 的自定義 Middleware 架構，以 ContextVars 管理非同步執行緒安全上下文。</div>
+          <div class="c-actions">
+            <span class="act blue">LangChain</span>
+            <span class="act blue">Gemini</span>
+            <span class="act">discord.py</span>
+            <span class="act">Middleware</span>
+            <span class="act">ContextVars</span>
+          </div>
+        </div>
+      </div>
 
-        <!-- Slide 3: PMI 科普 -->
-        <section class="slide science-intro">
-            <div class="max-w-5xl w-full">
-                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
-                    <div class="w-16 h-16 md:w-24 md:h-24 bg-blue-600 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">?</div>
-                    <div class="text-center md:text-left">
-                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">什麼是 PMI？</h2>
-                        <p class="text-blue-300 text-lg md:text-2xl italic">Probe Mark Inspection (探針痕跡檢測)</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="science-card" data-aos="fade-up">
-                        <h4 class="text-3xl font-bold mb-6 text-blue-400">核心定義</h4>
-                        <p class="text-slate-300 text-lg leading-relaxed">
-                            在晶圓電性測試中，探針會接觸晶片電極。PMI 透過影像分析這些接觸留下的<span class="highlight">「物理印記」</span>。這不僅是品質檢查，更是對測試環境、機台精度與產品良率的綜合診斷。
-                        </p>
-                    </div>
-                    <div class="science-card" data-aos="fade-up" data-aos-delay="200">
-                        <h4 class="text-3xl font-bold mb-6 text-blue-400">關鍵價值</h4>
-                        <ul class="space-y-6 text-slate-300 text-lg">
-                            <li class="flex items-start gap-3">
-                                <span class="text-blue-500 text-2xl">●</span>
-                                <span><b>精度保證</b>：確保每一顆晶片都能在正確的位置被測試。</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="text-blue-500 text-2xl">●</span>
-                                <span><b>預警維護</b>：透過痕跡異常提早發現探針卡耗損，避免昂貴報廢。</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+    </div>
+  </section>
 
-        <!-- Slide 4: RealTimePMI - Performance -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <div class="flex flex-col md:flex-row justify-between items-start mb-4 md:mb-8 gap-2">
-                    <h2 class="project-title text-2xl md:text-4xl">RealTimePMI：系統效能優化與推論穩定性</h2>
-                    <div class="methodology-tag">Challenge ➔ Action ➔ Impact</div>
-                </div>
-                <div class="content-grid">
-                    <div class="space-y-6">
-                        <div class="value-card">
-                            <h4 class="text-xl font-bold mb-4">效能瓶頸深度解析</h4>
-                            <p class="text-slate-300 leading-relaxed">
-                                面對大規模量產中海量影像推論需求，我深入分析並<span class="highlight">找出 Model Predict 底層效能瓶頸</span>。解決了量產中最忌諱的<span class="highlight text-red-400">生產中斷問題 (OOM)</span>，確保系統在高壓環境下的穩健度。
-                            </p>
-                        </div>
-                        <div class="stats-grid">
-                            <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-lg">
-                                <p class="text-xs text-slate-500 uppercase mb-2">推論吞吐量</p>
-                                <p class="text-3xl font-bold text-blue-400">240 <span class="text-sm">img/s</span></p>
-                                <p class="text-[10px] text-green-400 mt-2">↑ 530% Improvement</p>
-                            </div>
-                            <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-lg">
-                                <p class="text-xs text-slate-500 uppercase mb-2">TSK 處理時間</p>
-                                <p class="text-3xl font-bold text-green-400">143 <span class="text-sm">sec</span></p>
-                                <p class="text-[10px] text-slate-500 mt-2">Orig: 801 sec</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="glass-panel p-8">
-                        <h4 class="text-xl font-bold mb-6">系統開發價值</h4>
-                        <ul class="space-y-5 text-slate-300 text-sm">
-                            <li class="flex gap-4">
-                                <div class="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center shrink-0">1</div>
-                                <span><b>高負載資源調度</b>：實作動態資源監控，防止極端情況下的系統崩潰。</span>
-                            </li>
-                            <li class="flex gap-4">
-                                <div class="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center shrink-0">2</div>
-                                <span><b>資料庫 I/O 優化</b>：重新設計互動邏輯，解決高併發連線瓶頸。</span>
-                            </li>
-                            <li class="flex gap-4">
-                                <div class="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center shrink-0">3</div>
-                                <span><b>模型部署最佳化</b>：優化推論服務架構，滿足高性能即時檢測需求。</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 5: RealTimePMI - NeedleLayout -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <div class="flex flex-col md:flex-row justify-between items-start mb-4 md:mb-8 gap-2">
-                    <h2 class="project-title text-2xl md:text-4xl">AI 輔助 NeedleLayout 偏移量校正</h2>
-                    <div class="methodology-tag">Innovation ➔ Cost Saving</div>
-                </div>
-                <div class="content-grid items-center">
-                    <div class="glass-panel p-8 border-l-8 border-blue-500">
-                        <h4 class="text-2xl font-bold mb-6 italic text-blue-300">技術亮點：擬合對接技術</h4>
-                        <p class="text-slate-300 leading-relaxed mb-6">
-                            針對 TEL 機台，我們面臨全 Die 影像定位難題。我透過與 PDS 系統內的 Needle layout 進行擬合，利用 XY 軸局部採樣與多次預測，精確計算出 PixelSize 與平移旋轉比例，<span class="highlight">實現了對原始 Die 照片的精準定位裁剪</span>。
-                        </p>
-                        <div class="bg-blue-900/20 p-4 rounded-xl text-sm border border-blue-500/20">
-                            <span class="text-blue-400 font-bold">核心思維：</span> 以系統整合邏輯替代昂貴硬體升級，展現了「不增加模型技術棧」卻能解決複雜幾何定位的系統設計力。
-                        </div>
-                    </div>
-                    <div class="space-y-8">
-                        <div class="value-card">
-                            <h4 class="text-xl font-bold mb-4 success-text">關鍵成就</h4>
-                            <ul class="space-y-5 text-slate-300 text-sm">
-                                <li>
-                                    <p class="font-bold text-white">● 節省巨額資本支出 (CAPEX)</p>
-                                    <p class="text-xs opacity-70">成功為公司省下導入 "Per Pad/Bump Image" 機台硬體功能的費用。</p>
-                                </li>
-                                <li>
-                                    <p class="font-bold text-white">● 縮短測試循環時間</p>
-                                    <p class="text-xs opacity-70">機台只需整顆 Die 對焦拍照，最大化生產產能。</p>
-                                </li>
-                                <li>
-                                    <p class="font-bold text-white">● 降低二次異常風險</p>
-                                    <p class="text-xs opacity-70">減少機台多次移動拍照的機械磨損與時間成本。</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 6: Human-in-the-Loop - System Design -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">Human-in-the-Loop：機台整合與 UI 設計</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="space-y-4 md:space-y-8">
-                        <div class="value-card">
-                            <h4 class="text-xl font-bold mb-4">複雜機台指令整合</h4>
-                            <p class="text-slate-300 leading-relaxed">
-                                透過<span class="highlight">組合操作多種 Secs/Gem 指令</span>，我實現了極其複雜的「動態寬限期」邏輯。系統在發現異常後，會自動延遲 Alarm 觸發，確保在高品質把關下，<span class="highlight">不因 False Alarm 導致不必要的生產中斷</span>。
-                            </p>
-                        </div>
-                        <div class="glass-panel p-6">
-                            <h5 class="font-bold mb-4 text-blue-300">UI/UX 設計哲學</h5>
-                            <ul class="text-sm space-y-3 text-slate-400">
-                                <li>1. <span class="text-white font-bold">品質第一</span>：流程設計必須滿足品質追溯規範。</li>
-                                <li>2. <span class="text-white font-bold">職責切分</span>：介面設計明確區分開發、維運與現場操作權限。</li>
-                                <li>3. <span class="text-white font-bold">極簡操作</span>：在確保安全的前提下，追求最高的操作效率。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="bg-slate-900 rounded-3xl p-10 border border-slate-800 flex flex-col justify-center">
-                        <div class="text-center mb-8">
-                            <div class="inline-block p-4 rounded-2xl bg-blue-500/10 border border-blue-500/30">
-                                <h4 class="text-2xl font-bold text-blue-400">核心貢獻</h4>
-                            </div>
-                        </div>
-                        <p class="text-slate-300 text-center leading-relaxed italic">
-                            「我不僅開發了一個工具，更建立了一套『人機協作』的信任機制。透過軟體邏輯緩衝，我們成功將誤報停機率降低了 60% 以上。」
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 7: T+1 Internationalization -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <div class="flex flex-col md:flex-row justify-between items-start mb-4 md:mb-8 gap-2">
-                    <h2 class="project-title text-2xl md:text-4xl">T+1 規範國際化：大規模治理實踐</h2>
-                    <div class="methodology-tag">Relevant to Target Position</div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="space-y-6">
-                        <div class="value-card border-accent">
-                            <h4 class="text-xl font-bold mb-4 text-accent">大規模程式碼庫自動化</h4>
-                            <p class="text-slate-300 leading-relaxed">
-                                面對 PMI 系統中數十個 Repository 的國際化需求，我開發了一套基於 <span class="highlight">LLM Agent 的自動化治理工具</span>，對程式碼進行批量掃描、翻譯與 Review。
-                            </p>
-                        </div>
-                        <div class="glass-panel p-8">
-                            <h5 class="font-bold mb-4 text-blue-300">技術深度：Agentic Workflow</h5>
-                            <ul class="text-sm space-y-4 text-slate-400">
-                                <li class="flex gap-3"><span class="text-accent font-bold">●</span> <b>NLP 自動翻譯與審查</b>：確保多語言切換的一致性。</li>
-                                <li class="flex gap-3"><span class="text-accent font-bold">●</span> <b>CI/CD 整合</b>：自動生成 Pull Request 並進行初步審查。</li>
-                                <li class="flex gap-3"><span class="text-accent font-bold">●</span> <b>i18n 框架實作</b>：建立標準化的多語言資源管理架構。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="flex flex-col justify-center">
-                        <div class="bg-blue-900/10 p-10 rounded-3xl border border-blue-500/20 text-center">
-                            <h4 class="text-2xl font-bold mb-6 text-blue-400">軟體工程卓越價值</h4>
-                            <p class="text-slate-300 leading-relaxed text-lg">
-                                展示了我應對<span class="highlight">高度規範化壓力</span>的專業素養，以及利用 AI 技術解決傳統工程難題（如 Legacy Code 遷移）的創新能力。
-                            </p>
-                            <div class="mt-8 text-sm font-bold text-accent italic uppercase tracking-widest">
-                                Efficiency + Quality + Compliance
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 8: MLOps - AI Model Management -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">PMI AI Model 全生命週期管理 (MLOps)</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 md:mt-10">
-                    <div class="glass-panel p-8 flex flex-col justify-between border-t-8 border-blue-600 shadow-blue-500/10 shadow-2xl">
-                        <div>
-                            <h4 class="text-xl font-bold mb-4">系統現代化</h4>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                                將難以維護的 VB.net 訓練環境重構為 Python，徹底解決訓練失敗問題，並提升系統穩定性。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="glass-panel p-8 flex flex-col justify-between border-b-8 border-accent shadow-accent/10 shadow-2xl">
-                        <div>
-                            <h4 class="text-xl font-bold mb-4">自動化維運</h4>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                                建立 Label、Train、Deploy 的完整工作流。讓 AI 應用的更新不再依賴人工腳本，而是標準化服務。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="glass-panel p-8 flex flex-col justify-between border-t-8 border-purple-600 shadow-purple-500/10 shadow-2xl">
-                        <div>
-                            <h4 class="text-xl font-bold mb-4">數據閉環</h4>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                                建立生產圖庫與版本追蹤系統，確保每一次應用結果皆可回溯與持續改進。
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 9: Minor Projects - WebService & Waive -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">系統整合：WebService 與 智慧 Waive</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
-                    <div class="space-y-6">
-                        <div class="value-card">
-                            <h4 class="text-xl font-bold mb-4 text-blue-300">WebService & Zeep 整合</h4>
-                            <p class="text-slate-300 leading-relaxed text-sm">
-                                為了降低系統耦合度，我開發了專屬的 <span class="highlight">WebService</span> 處理耗時的 SetupFile 解析。Python 推論端僅需調用 API 即可獲取數據，展現了對「微服務化」架構的實踐。
-                            </p>
-                        </div>
-                        <div class="value-card border-accent">
-                            <h4 class="text-xl font-bold mb-4 text-accent">智慧 Waive 機制</h4>
-                            <p class="text-slate-300 leading-relaxed text-sm">
-                                基於針卡歷史與電性數據的綜合判定。這是一個典型的<span class="highlight">「領域知識與程式邏輯」</span>結合的案例，在不犧牲品質的前提下極大化生產流暢度。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="bg-slate-900/50 p-10 rounded-3xl border border-slate-800 text-center">
-                        <h4 class="text-xl font-bold mb-6 text-slate-300 uppercase tracking-widest">開發價值</h4>
-                        <div class="space-y-4 text-sm text-slate-500">
-                            <p>● 減少 50% 以上的人工重複解析時間</p>
-                            <p>● 系統模組化提升維護效率 40%</p>
-                            <p>● 確保生產決策的資料一致性</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 10: AOI 科普 -->
-        <section class="slide science-intro">
-            <div class="max-w-5xl w-full">
-                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
-                    <div class="w-16 h-16 md:w-24 md:h-24 bg-teal-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">?</div>
-                    <div class="text-center md:text-left">
-                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">什麼是 AOI？</h2>
-                        <p class="text-teal-300 text-lg md:text-2xl italic">Automated Optical Inspection (自動光學檢測)</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="science-card" data-aos="fade-up">
-                        <h4 class="text-3xl font-bold mb-6 text-teal-400">核心定義</h4>
-                        <p class="text-slate-300 text-lg leading-relaxed">
-                            利用工業相機模擬「數位之眼」，對晶圓表面進行全掃描。它負責發現微米級的刮傷、污染或結構缺陷，是保障出貨品質的最後一道防線。
-                        </p>
-                    </div>
-                    <div class="science-card" data-aos="fade-up" data-aos-delay="200">
-                        <h4 class="text-3xl font-bold mb-6 text-teal-400">與 PMI 的聯動</h4>
-                        <p class="text-slate-300 text-lg leading-relaxed">
-                            PMI 關注測試痕跡，AOI 關注表面完整性。我將兩者串聯，建立了一個從測試到檢驗的<span class="highlight">「全鏈路品質閉環」</span>。
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 11: RealTimeAOI - Architecture -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">RealTimeAOI：多機台支持與系統架構</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="space-y-8">
-                        <div class="value-card">
-                            <h4 class="text-xl font-bold mb-4">多平台支持 (Multi-platform)</h4>
-                            <p class="text-slate-300 leading-relaxed">
-                                成功導入並整合 <span class="highlight">Camtek 與 Rudolph</span> 等不同品牌的 AOI 機台。展現了在異構設備環境下，設計通用數據層與抽象化處理介面的能力。
-                            </p>
-                        </div>
-                        <div class="glass-panel p-6 border-l-4 border-accent">
-                            <h5 class="font-bold mb-2 text-accent">容器化部屬</h5>
-                            <p class="text-sm text-slate-400">
-                                全面遷移至 Linux Docker 環境，徹底移除對舊有 DLL 的依賴，提升了系統的部署效率與可移植性。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col justify-center">
-                        <div class="bg-slate-900 rounded-3xl p-10 border border-slate-800 text-center">
-                            <h4 class="text-2xl font-bold mb-6 text-blue-400">系統領航價值</h4>
-                            <p class="text-slate-300 leading-relaxed mb-6">
-                                「作為專案 Lead，我主導了 AOI 辨識系統從無到有的部屬，並建立了標準化的跨平台處理架構，大幅降低了後續新機台導入門檻。」
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 12: AOI to PMI Quality Loop -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">AOI 串接 PMI：品質檢驗閉環</h2>
-                <div class="glass-panel p-6 md:p-12">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
-                        <div class="space-y-4 md:space-y-8">
-                            <h4 class="text-3xl font-bold text-blue-300">跨製程特徵融合</h4>
-                            <p class="text-slate-300 text-lg leading-relaxed">
-                                我實現了 AOI 物件偵測與 PMI 語意分割的技術對接。利用 AOI 模型先行精準定位 PAD 與 BUMP 區域，自動剪裁後送入 PMI 進行預測。這是一場<span class="highlight">「跨系統的接力賽」</span>。
-                            </p>
-                            <div class="p-6 bg-accent/10 border-l-8 border-accent rounded text-sm italic">
-                                <span class="text-accent font-bold">價值：</span> 在出貨前的最終 Review 階段，能夠精確攔截前製程可能遺漏的細微針偏風險。
-                            </div>
-                        </div>
-                        <div class="bg-black/30 p-8 rounded-3xl border border-slate-800">
-                            <div class="flex flex-col gap-6">
-                                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center">
-                                    <p class="font-bold text-accent">AOI Stage</p>
-                                    <p class="text-xs text-slate-500">Surface & Pad Detection</p>
-                                </div>
-                                <div class="text-center text-blue-500 text-2xl font-bold">↓</div>
-                                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center">
-                                    <p class="font-bold text-blue-400">Integration Stage</p>
-                                    <p class="text-xs text-slate-500">Auto Alignment & Cropping</p>
-                                </div>
-                                <div class="text-center text-blue-500 text-2xl font-bold">↓</div>
-                                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center">
-                                    <p class="font-bold text-purple-400">PMI Stage</p>
-                                    <p class="text-xs text-slate-500">Deep Learning Prediction</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 13: OfflineAOI - Performance -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">OfflineAOI：運算效能與訓練優化</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="space-y-6">
-                        <div class="value-card">
-                            <h4 class="text-xl font-bold mb-4">GPU 資源智慧調度</h4>
-                            <p class="text-slate-300 leading-relaxed mb-4">
-                                實作了 <span class="highlight">BatchSize 動態決定機制</span>。系統會自動探測 GPU RAM 餘量並動態調整，徹底解決了訓練過程中常見的崩潰問題。
-                            </p>
-                        </div>
-                        <div class="stats-grid">
-                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                                <p class="text-xs text-slate-500 mb-1">訓練成功率</p>
-                                <p class="text-2xl font-bold text-green-400">100%</p>
-                            </div>
-                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                                <p class="text-xs text-slate-500 mb-1">運算時間節省</p>
-                                <p class="text-2xl font-bold text-blue-400">35%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="glass-panel p-8">
-                        <h4 class="text-xl font-bold mb-6">優化策略組合</h4>
-                        <ul class="space-y-6 text-sm text-slate-400">
-                            <li>• <b>早停機制 (Early Stopping)</b>：指標達標即停，節省無謂訓練耗時。</li>
-                            <li>• <b>動態數據管理</b>：讓工程師能快速反應生產現場的新型瑕疵。</li>
-                            <li>• <b>FastAPI 服務化</b>：提升模型調用的反應速度與併發處理能力。</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 14: Health Monitor 科普 -->
-        <section class="slide science-intro">
-            <div class="max-w-5xl w-full">
-                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
-                    <div class="w-16 h-16 md:w-24 md:h-24 bg-indigo-600 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">?</div>
-                    <div class="text-center md:text-left">
-                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">個人健康數據 AI</h2>
-                        <p class="text-indigo-300 text-lg md:text-2xl italic">AI-Driven Caregiving Solution</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="science-card" data-aos="fade-up">
-                        <h4 class="text-3xl font-bold mb-6 text-indigo-400">開發動機：科技回歸家庭</h4>
-                        <p class="text-slate-300 text-lg leading-relaxed">
-                            源於祖父長期臥床的照護需求。為了緩解家庭照顧者（姑姑）的壓力，我開發了此系統以實現<span class="highlight">生理指標的即時記錄與追蹤</span>。
-                        </p>
-                    </div>
-                    <div class="science-card" data-aos="fade-up" data-aos-delay="200">
-                        <h4 class="text-3xl font-bold mb-6 text-indigo-400">全家共享與醫療對接</h4>
-                        <p class="text-slate-300 text-lg leading-relaxed">
-                            所有家庭成員皆可即時瀏覽數據，甚至能將這些精確的歷史記錄分享給主治醫師，作為精準診斷的科學依據。
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 15: Health Monitor Architecture -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">Health Monitor：系統架構與 AI 整合</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
-                    <div class="space-y-6">
-                        <div class="value-card border-indigo-500">
-                            <h4 class="text-xl font-bold mb-4 text-indigo-300">智慧數據自動化</h4>
-                            <p class="text-slate-300 leading-relaxed text-sm">
-                                整合多模態 AI，實作圖片自動數據擷取與語音解析。將健康顧問與臨床數據結合，透過 JSON 格式精確傳遞生理指標，實現智慧化的健康回饋。
-                            </p>
-                        </div>
-                        <div class="glass-panel p-6">
-                            <h5 class="font-bold mb-4 text-slate-300 uppercase text-xs">系統穩健性保證</h5>
-                            <div class="grid grid-cols-2 gap-4 text-xs text-slate-500">
-                                <div>• Docker Compose 容器協同</div>
-                                <div>• Nginx 反向代理與 SSL</div>
-                                <div>• 異常偵測與自動預警</div>
-                                <div>• SQLite 高效數據管理</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-slate-900/40 rounded-3xl p-6 border border-slate-800 h-[450px] flex flex-col justify-center">
-                        <div class="flex-1 min-h-0">
-                            <canvas id="healthBackendChart"></canvas>
-                        </div>
-                        <p class="mt-4 text-center text-sm text-indigo-400 font-bold">效率提升：AI 自動化數據擷取</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 16: Health Monitor UX -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">Health Monitor：AI 接管與使用者體驗</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
-                    <div class="glass-panel p-10 border-l-8 border-accent">
-                        <h4 class="text-3xl font-bold mb-8 text-accent">智慧預覽與自動填入 (核心功能)</h4>
-                        <p class="text-slate-300 text-lg leading-relaxed mb-8">
-                            這是我設計中最引以為傲的功能：<span class="highlight">徹底省去照顧者的紙本記錄與複雜輸入</span>。照顧者只需簡單「口說」或「拍照」，系統即會自動解析並填入所有數據。
-                        </p>
-                        <ul class="space-y-4 text-slate-400 text-sm">
-                            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-accent rounded-full"></span> 拍照自動 OCR 生理指標</li>
-                            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-accent rounded-full"></span> 語音轉結構化數據</li>
-                            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-accent rounded-full"></span> 智慧預覽確認機制</li>
-                        </ul>
-                    </div>
-                    <div class="space-y-6">
-                        <div class="value-card border-blue-500">
-                            <h4 class="font-bold mb-4 text-lg">JavaScript 前端技術</h4>
-                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-                                使用純 JavaScript 實作模組化 SPA 與音訊頻譜視覺化，確保在各種設備上都能獲得最極速且直觀的錄入體驗。
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="tech-tag">SPA Architecture</span>
-                                <span class="tech-tag">MediaRecorder API</span>
-                                <span class="tech-tag">Chart.js</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 17: Xibao AI Agent 科普 -->
-        <section class="slide science-intro">
-            <div class="max-w-5xl w-full">
-                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
-                    <div class="w-16 h-16 md:w-24 md:h-24 bg-purple-600 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">🤖</div>
-                    <div class="text-center md:text-left">
-                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">Xibao AI Agent</h2>
-                        <p class="text-purple-300 text-lg md:text-2xl italic">Dynamic Skill & Autonomous Intelligence</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="science-card" data-aos="fade-up">
-                        <h4 class="text-3xl font-bold mb-6 text-purple-400">動態技能與代理</h4>
-                        <p class="text-slate-300 text-lg leading-relaxed">
-                            Xibao 不僅是聊天機器人，它是具備<span class="highlight">「工具調用與技能發現」</span>能力的代理。它能主動決定何時加載專業模組，並透過動態上下文管理維持 Token 效率。
-                        </p>
-                    </div>
-                    <div class="science-card" data-aos="fade-up" data-aos-delay="200">
-                        <h4 class="text-3xl font-bold mb-6 text-purple-400">漸進式披露哲學</h4>
-                        <p class="text-slate-300 text-lg leading-relaxed">
-                            系統不會一次載入所有工具，而是透過 <span class="highlight">Skill Discovery</span> 機制，僅在必要時加載詳細手冊。這有效解決了 Prompt 過長導致的精準度下降問題。
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 18: Xibao Dynamic Loading Process -->
-        <section class="slide">
-            <div class="max-w-5xl w-full">
-                <h2 class="project-title text-4xl mb-12">Xibao：動態技能載入與互動機制</h2>
-                
-                <div class="glass-panel p-10 relative overflow-hidden">
-                    <!-- Sequence Diagram Mockup -->
-                    <div class="flex flex-col gap-8 relative z-10">
-                        <!-- Discovery -->
-                        <div class="flex items-start gap-6 group">
-                            <div class="w-24 text-right pt-1 shrink-0">
-                                <span class="text-[10px] font-mono text-blue-400 tracking-tighter bg-blue-400/10 px-2 py-1 rounded">MIDDLEWARE</span>
-                            </div>
-                            <div class="relative flex-1 bg-slate-800/50 p-4 rounded-xl border border-slate-700 group-hover:border-blue-500/50 transition-colors">
-                                <p class="text-sm font-bold text-blue-300">1. Skill Discovery</p>
-                                <p class="text-xs text-slate-400 mt-1">掃描 <code class="text-blue-400">skills/</code> 目錄，於 System Message 注入可用能力清單 (名稱與簡述)。</p>
-                            </div>
-                        </div>
-
-                        <!-- Peek -->
-                        <div class="flex items-start gap-6 group">
-                            <div class="w-24 text-right pt-1 shrink-0">
-                                <span class="text-[10px] font-mono text-indigo-400 tracking-tighter bg-indigo-400/10 px-2 py-1 rounded">AGENT (LLM)</span>
-                            </div>
-                            <div class="relative flex-1 bg-slate-800/50 p-4 rounded-xl border border-slate-700 group-hover:border-indigo-500/50 transition-colors">
-                                <p class="text-sm font-bold text-indigo-300">2. SkillPeek (快速預覽)</p>
-                                <p class="text-xs text-slate-400 mt-1">Agent 呼叫 Peek 檢索 YAML 元數據，確認工具功能是否符合當前複雜任務。</p>
-                            </div>
-                        </div>
-
-                        <!-- Load -->
-                        <div class="flex items-start gap-6 group">
-                            <div class="w-24 text-right pt-1 shrink-0">
-                                <span class="text-[10px] font-mono text-purple-400 tracking-tighter bg-purple-400/10 px-2 py-1 rounded">INFRA TOOL</span>
-                            </div>
-                            <div class="relative flex-1 bg-slate-800/50 p-4 rounded-xl border border-slate-700 group-hover:border-purple-500/50 transition-colors">
-                                <p class="text-sm font-bold text-purple-300">3. SkillLoad (動態加載)</p>
-                                <p class="text-xs text-slate-400 mt-1">執行 <code class="text-purple-400">SkillLoad</code>，Middleware 動態匯入 <code class="text-accent">tools.py</code> 並回傳 Markdown 指南。</p>
-                            </div>
-                        </div>
-
-                        <!-- Execution -->
-                        <div class="flex items-start gap-6 group">
-                            <div class="w-24 text-right pt-1 shrink-0">
-                                <span class="text-[10px] font-mono text-accent tracking-tighter bg-accent/10 px-2 py-1 rounded">SPECIFIC TOOL</span>
-                            </div>
-                            <div class="relative flex-1 bg-accent/10 p-4 rounded-xl border border-accent/30 group-hover:border-accent transition-colors">
-                                <p class="text-sm font-bold text-accent">4. Task Execution & Visual Injection</p>
-                                <p class="text-xs text-slate-300 mt-1">根據指南精確執行。若回傳圖片，Middleware 自動進行視覺注入 (Visual Injection)。</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Decorative Line -->
-                    <div class="absolute left-[116px] top-24 bottom-24 w-[2px] bg-gradient-to-b from-blue-500 via-purple-500 to-accent opacity-20 hidden md:block"></div>
-                </div>
-
-                <div class="mt-8 flex justify-center gap-12">
-                    <div class="flex items-center gap-2">
-                        <div class="h-2 w-2 rounded-full bg-blue-500"></div>
-                        <span class="text-xs text-slate-400">高可擴展性</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <div class="h-2 w-2 rounded-full bg-purple-500"></div>
-                        <span class="text-xs text-slate-400">極致節省 Token</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <div class="h-2 w-2 rounded-full bg-accent"></div>
-                        <span class="text-xs text-slate-400">職責分離設計</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 19: Xibao Design Philosophy -->
-        <section class="slide">
-            <div class="max-w-6xl w-full">
-                <h2 class="project-title text-2xl md:text-4xl">Xibao：高可擴展性與設計優勢</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="space-y-8">
-                        <div class="value-card border-purple-500">
-                            <h4 class="text-xl font-bold mb-4 text-purple-300">模組化擴展性</h4>
-                            <p class="text-slate-300 leading-relaxed text-sm">
-                                新增技能只需建立目錄並放入 <code class="text-blue-400">SKILL.md</code> 與 <code class="text-blue-400">tools.py</code>，無需修改核心代碼。這體現了「開閉原則」在 AI Agent 架構中的實踐。
-                            </p>
-                        </div>
-                        <div class="value-card border-accent">
-                            <h4 class="text-xl font-bold mb-4 text-accent">異步併發安全</h4>
-                            <p class="text-slate-300 leading-relaxed text-sm">
-                                基於 <code class="text-xs text-accent">ContextVars</code> 的執行緒安全管理，確保在 Discord 高併發環境下，每個 User/Channel 的對話上下文與技能狀態互不干擾。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="bg-blue-900/10 p-12 rounded-3xl border border-blue-500/20 flex flex-col justify-center text-center">
-                        <h4 class="text-xl font-bold mb-4">架構價值</h4>
-                        <p class="text-slate-400 italic leading-relaxed text-lg">
-                            「透過漸進式披露與動態載入，我們在維持 Token 效率的同時，賦予了 Agent 接近無限的擴展能力。這是一個真正生產等級的 AI 應用架構。」
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 20: Leadership & IT Collaboration (Transition) -->
-        <section class="slide science-intro">
-            <div class="max-w-5xl w-full">
-                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8 md:mb-16" data-aos="fade-right">
-                    <div class="w-16 h-16 md:w-24 md:h-24 bg-blue-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-3xl md:text-5xl font-bold shadow-2xl shrink-0">💡</div>
-                    <div class="text-center md:text-left">
-                        <h2 class="text-3xl md:text-6xl font-bold mb-1 md:mb-2">IT 系統負責人的協作力</h2>
-                        <p class="text-blue-300 text-lg md:text-2xl italic">Bridging RD, MI, PD, and QA</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="science-card" data-aos="fade-up">
-                        <h4 class="text-3xl font-bold mb-6 text-blue-400">全方位的技術轉譯</h4>
-                        <p class="text-slate-300 text-lg leading-relaxed">
-                            作為 <span class="highlight">IT 系統負責人</span>，我不僅撰寫程式碼，更在 <span class="highlight">RD、MI、PD 與 QA</span> 之間擔任核心溝通橋樑。我負責將複雜的技術指標轉化為生產現場可執行的標準，確保系統價值落實。
-                        </p>
-                    </div>
-                    <div class="science-card" data-aos="fade-up" data-aos-delay="200">
-                        <h4 class="text-3xl font-bold mb-6 text-blue-400">解決問題的方法論</h4>
-                        <ul class="space-y-4 text-slate-400 text-sm">
-                            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> <b>精準定義</b>：深入各部門找出真正痛點。</li>
-                            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> <b>架構優先</b>：設計滿足多方需求的穩健骨幹。</li>
-                            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> <b>數據驅動</b>：利用量化指標達成跨部門共識。</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 21: Conclusion -->
-        <section class="slide">
-            <div class="max-w-4xl text-center px-4">
-                <h2 class="text-3xl md:text-6xl font-bold mb-8 md:mb-16 italic">專業願景</h2>
-                <div class="glass-panel p-8 md:p-16 mb-8 md:mb-16 shadow-blue-500/20 shadow-2xl">
-                    <p class="text-xl md:text-4xl leading-relaxed font-light">
-                        「我致力於構建<span class="text-blue-400 font-bold underline underline-offset-8">有生命力</span>的系統，<br>
-                        讓技術不再是冰冷的工具，<br>
-                        而是能實質解決問題、傳遞溫度的戰友。」
-                    </p>
-                </div>
-                <div class="flex justify-center gap-8 md:gap-16">
-                    <div class="text-center">
-                        <p class="text-4xl font-bold text-white mb-2">Reliable</p>
-                        <p class="text-xs text-slate-500 uppercase tracking-widest">穩定性</p>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-4xl font-bold text-white mb-2">Scalable</p>
-                        <p class="text-xs text-slate-500 uppercase tracking-widest">擴展性</p>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-4xl font-bold text-white mb-2">Value</p>
-                        <p class="text-xs text-slate-500 uppercase tracking-widest">價值創造</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- ══════ 07 · WORKING METHOD ══════ -->
+  <section class="slide" id="s7">
+    <div class="bg-text">Method</div>
+    <div class="sec-tag">05 &nbsp;·&nbsp; 工作方式</div>
+    <div class="sec-head">
+      <div class="sec-title">推進一件事的<br><span>四個階段</span></div>
+      <div class="sec-desc">無論是系統重構還是新功能，我習慣以同一套節奏推進，確保每步可驗證、整體可交付。</div>
     </div>
 
-    <script>
-        // Slide Logic
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const progressBar = document.getElementById('progressBar');
-        const slideNumDisplay = document.getElementById('slideNumber');
-        const jumpMenu = document.getElementById('jumpMenu');
-        const jumpMenuBtn = document.getElementById('jumpMenuBtn');
-        const jumpBtnArrow = document.getElementById('jumpBtnArrow');
-        const charts = {};
+    <div class="method-grid">
+      <div class="m-step">
+        <div class="m-num">01</div>
+        <div class="m-label">理解問題</div>
+        <div class="m-title">技術是服務需求</div>
+        <div class="m-desc">先深入理解機台行為、操作員流程與品質要求，讓技術成為解決問題的工具，而非炫技的目標。</div>
+      </div>
+      <div class="m-step">
+        <div class="m-num">02</div>
+        <div class="m-label">設計架構</div>
+        <div class="m-title">先定介面與職責切分，再實作細節</div>
+        <div class="m-desc">確認模組邊界、資料流向與錯誤處理策略，讓每步實作都有清楚目標與可測試的邊界。</div>
+      </div>
+      <div class="m-step">
+        <div class="m-num">03</div>
+        <div class="m-label">逐步推進</div>
+        <div class="m-title">先建地基，再擴展成都市</div>
+        <div class="m-desc">習慣優先交付通用的底層類與核心模組，確保基礎穩固後，再逐步疊加功能擴展——就像先把地基打好，上面的房子才能一步步擴展成一座都市。</div>
+      </div>
+      <div class="m-step">
+        <div class="m-num">04</div>
+        <div class="m-label">整合上線</div>
+        <div class="m-title">主動銜接部署、驗證與後續維護</div>
+        <div class="m-desc">不把程式碼寫完當「完成」，追蹤到系統在生產環境穩定運行，並為後續版本預留擴充空間。</div>
+      </div>
+    </div>
+  </section>
 
-        function initJumpMenu() {
-            // Populate menu items
-            slides.forEach((slide, index) => {
-                const titleElement = slide.querySelector('h1, h2');
-                const title = titleElement ? titleElement.innerText.split('\n')[0].substring(0, 30) : `Slide ${index + 1}`;
-                
-                const item = document.createElement('div');
-                item.className = 'jump-item text-xs text-slate-400';
-                item.innerHTML = `
-                    <span class="font-mono text-[10px] opacity-50">${(index + 1).toString().padStart(2, '0')}</span>
-                    <span class="truncate">${title}</span>
-                `;
-                item.onclick = (e) => {
-                    e.stopPropagation();
-                    goToSlide(index);
-                    toggleJumpMenu(false);
-                };
-                item.setAttribute('data-index', index);
-                jumpMenu.appendChild(item);
-            });
+  <!-- ══════ 08 · CLOSE ══════ -->
+  <section class="slide" id="s-close">
+    <div class="close-cover-bg-text">AI EAP</div>
+    <div class="close-cover-grid">
+      <div class="close-cover-left">
+        <div class="close-cover-eyebrow">感謝您的時間 · Thank You</div>
+        <div class="close-cover-name">陳添喜</div>
+        <div class="close-cover-name-en">Chen Tian-Xi</div>
+        <div class="close-cover-role-block">
+          <div class="close-cover-role">CIM · EAP<br>Equipment Application Programming<br>AI Full-Stack Engineer</div>
+        </div>
+        <div class="close-cover-intro">
+          從需求分析、架構設計、開發實作，到部署上線與後續迭代——<br>
+          我能獨立推進一個功能的完整生命週期，<br>
+          並在機台量產的複雜環境中持續交付 AI 應用。
+        </div>
+      </div>
+      <div class="close-cover-right">
+        <div class="close-info-row">
+          <div class="close-info-key">現職</div>
+          <div class="close-info-val">CIM EAP Engineer<br>半導體機台 AI 應用整合</div>
+        </div>
+        <div class="close-info-row">
+          <div class="close-info-key">核心能力</div>
+          <div class="close-info-val">AI 推論系統 · 全端開發<br>機台整合 · 分散式部署</div>
+        </div>
+        <div class="close-info-row">
+          <div class="close-info-key">技術語言</div>
+          <div class="close-info-val">Python · VB.net · DevExpress<br>SQL · Docker · Linux</div>
+        </div>
+        <div class="close-info-row">
+          <div class="close-info-key">AI 應用</div>
+          <div class="close-info-val">語意分割 · 物件偵測<br>LLM Agent · 多模態</div>
+        </div>
+        <div class="close-info-row">
+          <div class="close-info-key">特質</div>
+          <div class="close-info-val">端到端推進 · 問題導向<br>主動銜接 · 持續迭代</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            // Toggle logic
-            jumpMenuBtn.onclick = (e) => {
-                e.stopPropagation();
-                const isOpen = jumpMenu.classList.contains('active');
-                toggleJumpMenu(!isOpen);
-            };
+</div><!-- /deck -->
 
-            // Close when clicking outside
-            document.addEventListener('click', () => toggleJumpMenu(false));
-        }
+<!-- ═══ BOTTOM UI ═══ -->
+<div id="page-label">←→ 鍵翻頁</div>
 
-        function toggleJumpMenu(show) {
-            if (show) {
-                jumpMenu.classList.add('active');
-                jumpBtnArrow.style.transform = 'rotate(180deg)';
-                // Highlight current
-                const items = jumpMenu.querySelectorAll('.jump-item');
-                items.forEach((item, idx) => {
-                    item.classList.toggle('active', idx === currentSlide);
-                });
-            } else {
-                jumpMenu.classList.remove('active');
-                jumpBtnArrow.style.transform = 'rotate(0deg)';
-            }
-        }
+<div id="dot-rail"></div>
 
-        function initCharts() {
-            // Chart for Slide 15: Health Monitor Efficiency
-            const healthCanvas = document.getElementById('healthBackendChart');
-            if (healthCanvas) {
-                const healthCtx = healthCanvas.getContext('2d');
-                charts.health = new Chart(healthCtx, {
-                    type: 'radar',
-                    data: {
-                        labels: ['錄入速度', '數據準確度', '操作便捷性', '系統整合度', '家屬共享力'],
-                        datasets: [{
-                            label: '傳統紙本/手動',
-                            data: [30, 60, 20, 10, 40],
-                            fill: true,
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgb(255, 99, 132)',
-                            pointBackgroundColor: 'rgb(255, 99, 132)',
-                            pointBorderColor: '#fff'
-                        }, {
-                            label: 'AI-Driven 監控',
-                            data: [95, 98, 90, 85, 95],
-                            fill: true,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgb(54, 162, 235)',
-                            pointBackgroundColor: 'rgb(54, 162, 235)',
-                            pointBorderColor: '#fff'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            r: {
-                                angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
-                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                                pointLabels: { color: '#94a3b8', font: { size: 12 } },
-                                ticks: { display: false },
-                                suggestedMin: 0,
-                                suggestedMax: 100
-                            }
-                        },
-                        plugins: {
-                            legend: { labels: { color: '#f8fafc', font: { size: 12 } } }
-                        }
-                    }
-                });
-            }
-        }
+<div id="arrows">
+  <button class="arr-btn" id="btn-prev" onclick="navigate(-1)">←</button>
+  <button class="arr-btn" id="btn-next" onclick="navigate(1)">→</button>
+</div>
 
-        function updateSlide() {
-            slides.forEach((slide, index) => {
-                slide.classList.toggle('active', index === currentSlide);
-            });
-            const progress = ((currentSlide + 1) / slides.length) * 100;
-            progressBar.style.width = `${progress}%`;
-            slideNumDisplay.innerText = (currentSlide + 1).toString().padStart(2, '0');
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const navItems = [...document.querySelectorAll('.c-nav li')];
+  const dotRail = document.getElementById('dot-rail');
+  const cIdx = document.getElementById('c-idx');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
 
-            // Update menu active state if open
-            if (jumpMenu.classList.contains('active')) {
-                const items = jumpMenu.querySelectorAll('.jump-item');
-                items.forEach((item, idx) => {
-                    item.classList.toggle('active', idx === currentSlide);
-                });
-            }
-            
-            // Re-animate charts if active
-            setTimeout(() => {
-                if (currentSlide === 14 && charts.health) {
-                    charts.health.resize();
-                    charts.health.update('active');
-                }
-            }, 500);
+  let cur = 0;
+  let animating = false;
 
-            AOS.refresh();
-        }
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.onclick = () => goTo(i);
+    dotRail.appendChild(d);
+  });
 
-        function changeSlide(direction) {
-            currentSlide += direction;
-            if (currentSlide < 0) currentSlide = 0;
-            if (currentSlide >= slides.length) currentSlide = slides.length - 1;
-            updateSlide();
-        }
-        
-        function goToSlide(index) {
-            currentSlide = index;
-            updateSlide();
-        }
+  const dots = [...dotRail.querySelectorAll('.dot')];
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
-            if (e.key === 'ArrowLeft') changeSlide(-1);
-        });
+  function updateUI() {
+    const total = slides.length;
+    const pad = n => String(n).padStart(2, '0');
+    cIdx.textContent = `${pad(cur + 1)} / ${pad(total)}`;
+    dots.forEach((d, i) => d.classList.toggle('on', i === cur));
+    navItems.forEach((n, i) => n.classList.toggle('active', i === cur));
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === total - 1;
+  }
 
-        AOS.init({ duration: 600, once: false });
-        initCharts();
-        initJumpMenu();
-        updateSlide();
-    </script>
+  function goTo(idx) {
+    if (idx === cur || animating) return;
+    animating = true;
+
+    // Update nav immediately for instant feedback
+    navItems.forEach((n, i) => n.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('on', i === idx));
+    const pad = n => String(n).padStart(2, '0');
+    cIdx.textContent = `${pad(idx + 1)} / ${pad(slides.length)}`;
+
+    const dir = idx > cur ? 1 : -1;
+    const oldSlide = slides[cur];
+    const newSlide = slides[idx];
+
+    // exit current
+    oldSlide.classList.remove('active');
+    oldSlide.classList.add('exit-left');
+
+    // prepare new
+    newSlide.style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
+    newSlide.style.opacity = '0';
+    newSlide.style.pointerEvents = 'none';
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        newSlide.style.transition = 'opacity 0.45s cubic-bezier(0.4,0,0.2,1), transform 0.45s cubic-bezier(0.4,0,0.2,1)';
+        newSlide.style.transform = 'translateX(0)';
+        newSlide.style.opacity = '1';
+        newSlide.style.pointerEvents = 'all';
+
+        setTimeout(() => {
+          oldSlide.classList.remove('exit-left');
+          oldSlide.style.transform = '';
+          oldSlide.style.opacity = '';
+          oldSlide.style.pointerEvents = '';
+          oldSlide.style.transition = '';
+
+          newSlide.style.transform = '';
+          newSlide.style.opacity = '';
+          newSlide.style.pointerEvents = '';
+          newSlide.style.transition = '';
+          newSlide.classList.add('active');
+
+          cur = idx;
+          updateUI();
+          animating = false;
+        }, 460);
+      });
+    });
+  }
+
+  function navigate(dir) {
+    const next = cur + dir;
+    if (next >= 0 && next < slides.length) goTo(next);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  });
+
+  // Touch swipe
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+  });
+
+  updateUI();
+</script>
 </body>
 </html>
