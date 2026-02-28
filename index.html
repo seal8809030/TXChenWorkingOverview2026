@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>陳添喜 · Interview 2025</title>
+<title>陳添喜 · Presentation 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300&family=IBM+Plex+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -69,6 +69,12 @@ html, body {
 .slide.exit-left {
   opacity: 0;
   transform: translateX(-60px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.slide.exit-right {
+  opacity: 0;
+  transform: translateX(60px);
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
@@ -1318,7 +1324,7 @@ html, body {
 
     // exit current
     oldSlide.classList.remove('active');
-    oldSlide.classList.add('exit-left');
+    oldSlide.classList.add(dir > 0 ? 'exit-left' : 'exit-right');
 
     // prepare new
     newSlide.style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
@@ -1333,7 +1339,7 @@ html, body {
         newSlide.style.pointerEvents = 'all';
 
         setTimeout(() => {
-          oldSlide.classList.remove('exit-left');
+          oldSlide.classList.remove('exit-left', 'exit-right');
           oldSlide.style.transform = '';
           oldSlide.style.opacity = '';
           oldSlide.style.pointerEvents = '';
