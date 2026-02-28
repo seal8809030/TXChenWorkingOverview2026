@@ -656,6 +656,109 @@ html, body {
   letter-spacing: 0.1em;
   z-index: 500;
 }
+
+/* ═══════════════════════════
+   MOBILE RESPONSIVE
+═══════════════════════════ */
+@media (max-width: 768px) {
+  .slide {
+    padding: 80px 24px 80px 24px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .slide::-webkit-scrollbar {
+    width: 4px;
+  }
+  .slide::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+  }
+  
+  #chrome {
+    padding: 0 24px;
+  }
+  
+  .c-nav {
+    display: none;
+  }
+  
+  #arrows {
+    bottom: 24px;
+    right: 24px;
+  }
+  
+  #dot-rail, #page-label {
+    display: none;
+  }
+
+  .cover-grid, .close-cover-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .cover-right, .close-cover-right {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+  
+  .close-cover-right {
+    border-top: 1px solid #2a3a4a;
+  }
+
+  .card {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 24px 0;
+  }
+
+  .stack-grid {
+    grid-template-columns: 1fr;
+  }
+  .stack-item {
+    border-right: none !important;
+    padding: 24px 0;
+  }
+
+  .method-grid {
+    grid-template-columns: 1fr;
+  }
+  .m-step {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0;
+  }
+  .m-step:last-child {
+    border-bottom: none;
+  }
+  
+  .cover-bg-text, .bg-text, .close-cover-bg-text {
+    font-size: 80px;
+    bottom: 20px;
+    right: 0px;
+    opacity: 0.15;
+  }
+  
+  .cover-name, .close-cover-name {
+    font-size: 40px;
+  }
+  
+  .sec-tag {
+    margin-bottom: 24px;
+  }
+
+  .sec-title {
+    font-size: 26px;
+  }
+
+  /* Padding at the bottom for scrollable content */
+  .cover-grid, .close-cover-grid, .cards, .stack-grid, .method-grid {
+    padding-bottom: 60px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1262,10 +1365,17 @@ html, body {
 
   // Touch swipe
   let tx = 0;
-  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+  let ty = 0;
+  document.addEventListener('touchstart', e => {
+    tx = e.touches[0].clientX;
+    ty = e.touches[0].clientY;
+  }, { passive: true });
   document.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+    const dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      navigate(dx < 0 ? 1 : -1);
+    }
   });
 
   updateUI();
